@@ -1,0 +1,297 @@
+#------------------------------
+# Functions
+#------------------------------
+
+# Archive extractor
+function extract() {
+    local remove_archive
+    local success
+    local file_name
+    local extract_dir
+
+    if (( $# == 0 )); then
+        echo "Usage: extract [-option] [file ...]"
+        echo
+        echo Options:
+        echo " -r, --remove Remove archive."
+        echo
+        echo "Report bugs to <sorin.ionescu@gmail.com>."
+    fi
+
+    remove_archive=1
+    if [[ "$1" == "-r" ]] || [[ "$1" == "--remove" ]]; then
+        remove_archive=0
+        shift
+    fi
+
+    while (( $# > 0 )); do
+        if [[ ! -f "$1" ]]; then
+            echo "extract: '$1' is not a valid file" 1>&2
+            shift
+            continue
+        fi
+
+        success=0
+        file_name="$( basename "$1" )"
+        extract_dir="$( echo "$file_name" | sed "s/\.${1##*.}//g" )"
+        case "$1" in
+            (*.tar.gz|*.tgz) tar xvzf "$1" ;;
+            (*.tar.bz2|*.tbz|*.tbz2) tar xvjf "$1" ;;
+            (*.tar.xz|*.txz) tar --xz --help &> /dev/null \
+                && tar --xz -xvf "$1" \
+                || xzcat "$1" | tar xvf - ;;
+            (*.tar.zma|*.tlz) tar --lzma --help &> /dev/null \
+                && tar --lzma -xvf "$1" \
+                || lzcat "$1" | tar xvf - ;;
+            (*.tar) tar xvf "$1" ;;
+            (*.gz) gunzip "$1" ;;
+            (*.bz2) bunzip2 "$1" ;;
+            (*.xz) unxz "$1" ;;
+            (*.lzma) unlzma "$1" ;;
+            (*.Z) uncompress "$1" ;;
+            (*.zip) unzip "$1" -d $extract_dir ;;
+            (*.rar) unrar e -ad "$1" ;;
+            (*.7z) 7za x "$1" ;;
+            (*.deb)
+                mkdir -p "$extract_dir/control"
+                mkdir -p "$extract_dir/data"
+                cd "$extract_dir"; ar vx "../${1}" > /dev/null
+                cd control; tar xzvf ../control.tar.gz
+                cd ../data; tar xzvf ../data.tar.gz
+                cd ..; rm *.tar.gz debian-binary
+                cd ..
+                ;;
+            (*)
+                echo "extract: '$1' cannot be extracted" 1>&2
+                success=1
+                ;;
+        esac
+
+        (( success = $success > 0 ? $success : $? ))
+        (( $success == 0 )) && (( $remove_archive == 0 )) && rm "$1"
+        shift
+    done
+}
+
+# A shortcut function that simplifies usage of xclip.
+# - Accepts input from either stdin (pipe), or params.
+# - If the input is a filename that exists, then it
+#   uses the contents of that file.
+# http://madebynathan.com/2011/10/04/a-nicer-way-to-use-xclip/
+cb() {
+    local _scs_col="\e[0;32m"; local _wrn_col='\e[1;31m'; local _trn_col='\e[0;33m'
+    # Check that xclip is installed.
+    if ! type xclip > /dev/null 2>&1; then
+        echo -e "$_wrn_col""You must have the 'xclip' program installed.\e[0m"
+    # Check user is not root (root doesn't have access to user xorg server)
+    elif [[ "$USER" == "root" ]]; then
+        echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
+    else
+        # If no tty, data should be available on stdin
+        if ! [[ "$( tty )" == /dev/* ]]; then
+            input="$(< /dev/stdin)"
+        # Else, fetch input from params
+        else
+            input="$*"
+        fi
+        if [ -z "$input" ]; then  # If no input, print usage message.
+            echo "Copies a string or the contents of a file to the clipboard."
+            echo "Usage: cb <string or file>"
+            echo "       echo <string or file> | cb"
+        else
+            # If the input is a filename that exists, then use the contents of that file.
+            if [ -f "$input" ]; then input="$(cat $input)"; fi
+            # Copy input to clipboard
+            echo -n "$input" | xclip -selection c
+            # Truncate text for status
+            if [ ${#input} -gt 80 ]; then input="$(echo $input | cut -c1-80)$_trn_col...\e[0m"; fi
+            # Print status.
+            echo -e "$_scs_col""Copied to clipboard:\e[0m $input"
+        fi
+    fi
+}
+
+# print current git branch to stdout
+function current_branch() {
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    echo ${ref#refs/heads/}
+}
+
+# Pastie
+sprunge() {
+    $@ | curl -F 'sprunge=<-' http://sprunge.us
+}
+
+# tired of doing a wget <S-Ins><CR>; tar xf f<Tab><CR>; cd f<Tab><CR> ?
+# Usage: wt 'http://example.com/blah.blah.tar.gz' [keep]
+# If [keep] is presented, whatever it is, the tarball will be kept.
+wt() {
+    (( $# == 0 )) && return
+    local URL="$1"
+    local keep="$2"
+    local filename="$(basename "$URL")"
+    wget "$URL" -O "$filename"
+    tar xf "$filename"
+    [[ -z "$keep" ]] && rm "$filename"
+    # Guessing the directory
+    local d="${filename%%.[a-z]*}"
+    if [[ -d "$d" ]]; then
+        cd "$d"
+    else
+        echo "Sorry, I don't know what's the name of extracted directory."
+    fi
+}
+
+start() {
+    for arg in $*; do
+        sudo /etc/rc.d/$arg start
+    done
+}
+
+restart() {
+    for arg in $*; do
+        sudo /etc/rc.d/$arg restart
+    done
+}
+
+stop() {
+    for arg in $*; do
+        sudo /etc/rc.d/$arg stop
+    done
+}
+
+prepend() {
+    sed -i "1i $1" $2
+}
+
+mkcdd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+psg () {
+    ps aux | grep "$1" | grep -v "grep"
+}
+
+# Calcultor
+c () {
+    # echo "scale=3; $@" | bc
+    bc -l <<< $@
+}
+alias c="noglob c" # do not glob (expand) wildcards, like: c 12*3
+
+function proxyon() {
+        # echo -n "username:"
+        # read -es username
+        # echo -n "password:"
+        # read -s password
+        # export http_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
+        # export https_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
+        # export ftp_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
+        export http_proxy="www-proxy.htw-saarland.de:3128"
+        export https_proxy="www-proxy.htw-saarland.de:3128"
+        export ftp_proxy="www-proxy.htw-saarland.de:3128"
+        echo -e "Proxy environment variable set."
+}
+
+function proxyoff() {
+    unset HTTP_PROXY
+        unset http_proxy
+        unset https_proxy
+        unset HTTPS_PROXY
+        unset FTP_PROXY
+        unset ftp_proxy
+        echo -e "\nProxy environment variable removed."
+}
+
+rationalise-dot() {
+    if [[ $LBUFFER = *.. ]]; then
+        LBUFFER+=/..
+    else
+        LBUFFER+=.
+            fi
+}
+zle -N rationalise-dot
+bindkey . rationalise-dot
+
+countdown() {
+    local abort
+    [[ $1 -gt 0 ]] || return 
+    for (( i=$1; i > 0; i-- ))
+    do
+        read -k 1 -t 1 -s abort
+        #[[ -z $abort ]] || return
+        if [[ -n $abort ]]; then
+            [[ $(wc -l <<< $abort) -gt 1 ]] && break || return
+        fi
+        echo -n "$i "
+    done
+    echo
+}
+
+sdwn() {
+    echo -n "halting in ... "
+    countdown 3 && sudo shutdown -h now
+}
+
+rbt() {
+    echo -n "rebooting in ... "
+    countdown 3 && sudo reboot
+}
+
+# file/dir backup and restore
+# u: undo | f: move
+bak() {
+ case "$1" in
+    "-u")
+        mv -i $2 ${2:r}
+        ;;
+    "-f")
+        mv -i $2{,.bak}
+        ;;
+    *)
+        cp -ir $1{,.bak}
+        ;;
+    esac
+}
+
+# output a specific line of a file
+# $1: line number ; $2: file
+line () {
+	head -n $1 $2 | tail -1
+}
+ 
+# swap 2 filenames around
+swp() { 
+    if [ $# -ne 2 ]; then
+        echo "swap: 2 arguments needed"; return 1
+    fi
+    if [ ! -e $1 ]; then
+        echo "swap: $1 does not exist"; return 1
+    fi
+    if [ ! -e $2 ]; then
+        echo "swap: $2 does not exist"; return 1
+    fi
+    local TMPFILE=tmp.$$
+    mv $1 $TMPFILE
+    mv $2 $1
+    mv $TMPFILE $2
+}
+
+stop_alarm () {
+    local pidfile=/tmp/alarm.pid
+    local remote_user=pschmitt
+    local remote_host=LaXLinux
+	local stop_cmd="mpc pause && [[ -r $pidfile ]] && kill -9 \"\$(cat $pidfile)\" && rm -rf $pidfile"
+	if [[ "$(hostname)" != "LaXLinux" ]]; then
+        ssh $remote_user@$remote_host "$stop_cmd" 2&> /dev/null
+    else 
+        eval "$stop_cmd" 2&> /dev/null
+    fi
+}
+
+# umount + remove directory (only if mounted under /media)
+umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
+
+# fav pron
+pf() { echo "$*" >> $HOME/videos/.porn/bookmarks }
+

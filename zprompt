@@ -1,0 +1,59 @@
+#------------------------------
+# Prompt
+#------------------------------
+
+setopt prompt_subst
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:(hg*|git*):*' get-revision true
+zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr " (%F{red}!%F)"
+
+zstyle ':vcs_info:*' actionformats '%F{green}%b%F'
+zstyle ':vcs_info:*' formats '%F{green}%b%F%u'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b:%r'
+
+
+# or use pre_cmd, see man zshcontrib
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "${vcs_info_msg_0_}$del"
+  fi
+}
+
+# prompt bigfade
+
+local curdir="%~"
+local hostname="%M"
+local username="%n"
+local bold="%B"
+local unbold="%b"
+local standout="%S"
+local unstandout="%s"
+local colorfg="%F"
+local uncolorfg="%f"
+local colorbg="%K"
+local uncolorbg="%k"
+local mytime="%*"
+local mydate="%D"
+local line_tty="%y"
+local rootorwhat="%#"
+local return_status="%?"
+local host_color
+
+# preview colors
+# for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
+
+# set hostname color
+case $(hostname) in
+    "LaXLinux-CL") host_color="{069}";;
+    "LaXLinux")    host_color="{208}";;
+    "alarmpi")     host_color="{005}";;
+    *)             host_color="{154}";;
+esac
+
+PROMPT="$colorfg{120}$curdir$uncolorfg $bold$colorfg{145}|$uncolorfg$unbold %(!.$bold$colorfg{red}.)$username$unbold$uncolorfg$colorfg{red}:$uncolorfg$colorfg$host_color$hostname$uncolorfg $return_status $colorfg{221}» $uncolorfg"
+
+RPROMPT=$'$(vcs_info_wrapper)'
