@@ -144,19 +144,31 @@ wt() {
 
 start() {
     for arg in $*; do
-        sudo /etc/rc.d/$arg start
+        command -v rc.d &> /dev/null && { 
+            sudo /etc/rc.d/$arg start
+        } || { 
+            sudo systemctl start $arg 
+        }
     done
 }
 
 restart() {
     for arg in $*; do
-        sudo /etc/rc.d/$arg restart
+        command -v rc.d &> /dev/null && { 
+            sudo /etc/rc.d/$arg restart
+        } || { 
+            sudo systemctl restart $arg 
+        }
     done
 }
 
 stop() {
     for arg in $*; do
-        sudo /etc/rc.d/$arg stop
+        command -v rc.d &> /dev/null && { 
+            sudo /etc/rc.d/$arg stop
+        } || { 
+            sudo systemctl stop $arg 
+        }
     done
 }
 
