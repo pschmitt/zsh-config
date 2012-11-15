@@ -142,6 +142,10 @@ wt() {
     fi
 }
 
+status() {
+    sudo systemctl status "$*"
+}
+
 start() {
     for arg in $*; do
         command -v rc.d &> /dev/null && { 
