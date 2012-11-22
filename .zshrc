@@ -166,7 +166,8 @@ bindkey '^i' expand-or-complete-prefix
 ## file rename magic (alt+m)
 bindkey "^[m" copy-prev-shell-word
 
-
+# Colors
+eval $(dircolors -b $HOME/.LS_COLORS)
 
 #------------------------------
 # Source config files
