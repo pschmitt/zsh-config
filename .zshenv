@@ -8,7 +8,11 @@ export BROWSER=firefox
 
 export VISUAL=vim
 export EDITOR=vim
-export FILER=pcmanfm
+export FILER=spacefm
+
+# Use XDG config dir for vim
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 
 # Permissions rw-r--r-- pour les fichiers crées
 # et rwxr-xr-x pour les répertoires crées
