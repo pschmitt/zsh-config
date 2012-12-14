@@ -167,7 +167,7 @@ bindkey '^i' expand-or-complete-prefix
 bindkey "^[m" copy-prev-shell-word
 
 # Colors
-eval $(dircolors -b $HOME/.LS_COLORS)
+eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
 
 #------------------------------
 # Source config files

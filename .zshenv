@@ -32,6 +32,8 @@ export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 # De la couleur pour grep
 export GREP_OPTIONS='--color=auto'
 
+[[ -n "$XDG_CONFIG_HOME" ]] || export XDG_CONFIG_HOME=$HOME/.config
+
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 #[[ $TERM -eq "fbterm" ]] && fbterm&
 
