@@ -68,7 +68,7 @@ zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:killall:*' menu yes select
 
-compctl -k "(primary projector extend copy)" xrdr
+compctl -k "(count debug primary secondary tertiary toggle extend copy)" xrdr
 compdef '_files -W /etc/rc.d' start stop restart
 
 autoload -U promptinit
