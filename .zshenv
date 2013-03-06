@@ -4,7 +4,7 @@
 #    export PATH=$PATH:~/bin
 #fi
 
-export BROWSER=firefox
+export BROWSER=firefox-fullscreenhack
 
 export VISUAL=vim
 export EDITOR=vim
@@ -33,6 +33,9 @@ export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
 export GREP_OPTIONS='--color=auto'
 
 [[ -n "$XDG_CONFIG_HOME" ]] || export XDG_CONFIG_HOME=$HOME/.config
+
+# Fix Steam'S close button (close -> minimize to tray)
+export STEAM_FRAME_FORCE_CLOSE=1
 
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 #[[ $TERM -eq "fbterm" ]] && fbterm&

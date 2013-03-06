@@ -290,11 +290,13 @@ countdown() {
 sdwn() {
     echo -n "halting in ... "
     countdown 3 && sudo shutdown -h now
+    # systemctl poweroff
 }
 
 rbt() {
     echo -n "rebooting in ... "
     countdown 3 && sudo reboot
+    # systemctl reboot
 }
 
 # file/dir backup and restore
