@@ -354,5 +354,13 @@ stop_alarm () {
 umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
 
 # fav pron
-pf() { echo "$*" >> $HOME/videos/porn/bookmarks }
-
+pf() { 
+    local pfile=$HOME/videos/porn/.bookmarks
+    touch $pfile
+    xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
+    sleep 1 
+    xdotool key "F6"
+    xdotool key ctrl+c
+    xsel -b >> $pfile
+    echo >> $pfile
+}
