@@ -1,9 +1,9 @@
-# echo "sourcing $ZDOTDIR/.zshenv"
+echo "sourcing $ZDOTDIR/.zshenv"
 
-#if [[ -z $(echo $PATH | grep ~/bin) ]]; then
-#    export PATH=$PATH:~/bin
-#fi
-
+if [[ -z $(echo $PATH | grep ~/bin) ]]; then
+    export PATH=$PATH:~/bin
+fi
+echo $PATH
 export BROWSER=firefox-fullscreenhack
 
 export VISUAL=vim
@@ -36,6 +36,9 @@ export GREP_OPTIONS='--color=auto'
 
 # Fix Steam'S close button (close -> minimize to tray)
 export STEAM_FRAME_FORCE_CLOSE=1
+
+# Fix "QGtkStyle was unable to detect the current GTK+ theme"
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 #[[ $TERM -eq "fbterm" ]] && fbterm&

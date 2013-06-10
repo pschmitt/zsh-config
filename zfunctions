@@ -354,5 +354,5 @@ stop_alarm () {
 umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
 
 # fav pron
-pf() { echo "$*" >> $HOME/videos/.porn/bookmarks }
+pf() { echo "$*" >> $HOME/videos/porn/bookmarks }
 
