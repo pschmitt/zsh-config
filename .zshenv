@@ -1,10 +1,10 @@
-echo "sourcing $ZDOTDIR/.zshenv"
+# Following line breaks scp !
+#echo "sourcing $ZDOTDIR/.zshenv"
 
 if [[ -z $(echo $PATH | grep ~/bin) ]]; then
     export PATH=$PATH:~/bin
 fi
-echo $PATH
-export BROWSER=firefox-fullscreenhack
+export BROWSER=chromium
 
 export VISUAL=vim
 export EDITOR=vim
@@ -43,3 +43,4 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 #[[ $TERM -eq "fbterm" ]] && fbterm&
 
+#export CHROMIUM_USER_FLAGS="--password-store=gnome"

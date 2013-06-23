@@ -2,6 +2,12 @@
 # Functions
 #------------------------------
 
+# Job management
+# Slay: send to background and detach from term
+slay() {
+    "$*" >/dev/null 2>&1 & disown %1
+}
+
 # Archive extractor
 function extract() {
     local remove_archive
