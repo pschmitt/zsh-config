@@ -370,3 +370,10 @@ pf() {
     xsel -b >> $pfile
     echo >> $pfile
 }
+
+# Development
+adblg() {
+    local pkgname=co.schmitt.android
+    local apppid=$(adb shell ps | grep $pkgname | cut -c10-15 | awk '{ print $1 }')
+    adb logcat | grep $apppid 
+}

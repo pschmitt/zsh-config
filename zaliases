@@ -140,6 +140,13 @@ alias gcc="gcc -Wall -pedantic"
 alias xerces="java -classpath $HOME/uni/lectures/metasprachen/xerces-2_11_0/xercesImpl.jar:$HOME/uni/lectures/metasprachen/xerces-2_11_0/xercesSamples.jar:. sax.Counter -v"
 alias xalan="java -cp /usr/share/java/xalan.jar org.apache.xalan.xslt.Process"
 
+# Development 
+# KeyringDroid
+alias adb-root="adb root start-server; adb connect sgs"
+alias pulldb="rm ~/temp/keyrings.db; adb pull /data/data/co.schmitt.android.keyringdroid/databases/keyrings.db ~/temp/keyrings.db && sqlitebrowser ~/temp/keyrings.db "
+alias adbc="adb connect sgs"
+alias adbuninst="adb shell pm uninstall -k co.schmitt.android.keyringdroid"
+
 # git
 alias g='git'
 compdef g=git
@@ -180,6 +187,7 @@ alias gm='git merge'
 compdef _git gm=git-merge
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
+alias gcx='git clone $(xsel -b)'
 
 # Git and svn mix
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
