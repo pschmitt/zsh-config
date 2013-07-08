@@ -144,6 +144,7 @@ alias xalan="java -cp /usr/share/java/xalan.jar org.apache.xalan.xslt.Process"
 # KeyringDroid
 alias adb-root="adb root start-server; adb connect sgs"
 alias pulldb="rm ~/temp/keyrings.db; adb pull /data/data/co.schmitt.android.keyringdroid/databases/keyrings.db ~/temp/keyrings.db && sqlitebrowser ~/temp/keyrings.db "
+alias pullkrd="adb shell rm /extSdCard/krd.tgz; rm -rf ~/temp/keyringdroid/krd.tgz ~/temp/keyringdroid/co.schmitt.android.keyringdroid; adb shell tar cvzf /extSdCard/krd.tgz /data/data/co.schmitt.android.keyringdroid/; adb pull /extSdCard/krd.tgz ~/temp/keyringdroid; cd ~/temp/keyringdroid/; tar zxvf ~/temp/keyringdroid/krd.tgz; mv data/data/co.schmitt.android.keyringdroid .; rm -rf data/; cd -" 
 alias adbc="adb connect sgs"
 alias adbuninst="adb shell pm uninstall -k co.schmitt.android.keyringdroid"
 
