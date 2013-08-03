@@ -78,6 +78,10 @@ alias wd="wicd-curses"
 alias myip="wget --quiet -O - checkip.dyndns.org | sed -e 's/[^:]*: //' -e 's/<.*$//'"
 alias firefoxg="firefox -P guest"
 alias wank="firefox-fullscreenhack -P 'porn' -no-remote -private"
+alias ro="start openvpn@Romania"
+alias rod="stop openvpn@Romania transmission"
+alias ch="start openvpn@Switzerland"
+alias chd="stop openvpn@Switzerland transmission"
 
 # Gaming
 alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
