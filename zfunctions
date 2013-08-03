@@ -360,7 +360,7 @@ stop_alarm () {
 umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
 
 # fav pron
-pf() { 
+pfx() { 
     local pfile=$HOME/videos/porn/.bookmarks
     touch $pfile
     xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
@@ -369,6 +369,11 @@ pf() {
     xdotool key ctrl+c
     xsel -b >> $pfile
     echo >> $pfile
+}
+pf() {
+    [[ -z "$1" ]] && { echo "Please provide a URL."; exit 1;}
+    local pfile=$HOME/videos/porn/.bookmarks
+    echo "$*" >> $pfile
 }
 
 # Development
