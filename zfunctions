@@ -294,6 +294,7 @@ countdown() {
 }
 
 sdwn() {
+    [[ "$HOST" == "hetzLax" ]] && { echo "You are on $HOST you dumb fuck."; exit 0; }
     echo -n "halting in ... "
     countdown 3 && sudo shutdown -h now
     # systemctl poweroff
