@@ -186,7 +186,7 @@ prepend() {
     sed -i "1i $1" $2
 }
 
-mkcdd() {
+mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
