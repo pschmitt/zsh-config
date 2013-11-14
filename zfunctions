@@ -309,17 +309,24 @@ rbt() {
 # file/dir backup and restore
 # u: undo | f: move
 bak() {
- case "$1" in
-    "-u")
-        mv -i $2 ${2:r}
-        ;;
-    "-f")
-        mv -i $2{,.bak}
-        ;;
-    *)
-        cp -ir $1{,.bak}
-        ;;
-    esac
+    # TODO There may be a file called "-s"
+    # TOOD Refactoring / split / use smart case statement ?
+    [[ "$1" == "-s" ]] && cmd="cp -r" || cmd="mv"
+    [[ $# -eq 2 ]] && shift
+    if [[ "$1" =~ ".*\.bak" ]]; then
+        eval $cmd -i "$1" "${1:r}"
+    else
+        local file="$1"
+        if [[ ! -e "$file" ]]; then
+            # if file does not exit try .bak instead
+            [[ -e "${file}.bak" ]] && file="${file}.bak" || { echo "No such file or dir: $file"; return 1; }
+        fi
+        if [[ "$file" =~ ".*\.bak" ]]; then
+            eval $cmd -i "$file" "${1:r}"
+        else
+            eval $cmd -i "$file{,.bak}"
+        fi
+    fi
 }
 
 # output a specific line of a file
