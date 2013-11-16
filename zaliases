@@ -196,6 +196,7 @@ compdef _git gmrg=git-merge
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
 alias gcx='git clone $(xsel -b)'
+alias gcxr='git clone --recursive $(xsel -b)'
 
 # Git and svn mix
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
