@@ -4,7 +4,7 @@
 if [[ -z $(echo $PATH | grep ~/bin) ]]; then
     export PATH=$PATH:~/bin
 fi
-export BROWSER=chromium
+export BROWSER=firefox
 
 export VISUAL=vim
 export EDITOR=vim
