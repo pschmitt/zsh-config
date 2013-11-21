@@ -53,14 +53,6 @@ zstyle ':completion:*' completer _force_rehash _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# tab completion for PID :D
-#zstyle ':completion:*:*:kill:*' menu yes select
-#zstyle ':completion:*:kill:*' force-list always
-#zstyle ':completion:*:*:kill:*' menu yes select
-#zstyle ':completion:*:*:kill:*:processes' command 'ps haxopid:5,user:4,%cpu:4,ni:2,stat:3,etime:8,args'
-#zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-#zstyle ':completion:*:kill:*' force-list always
-
 zstyle ':completion:*:processes' command 'ps -ax'
 zstyle ':completion:*:processes-names' command 'ps -aeo comm='
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
@@ -100,6 +92,7 @@ setopt hist_verify                              #
 setopt share_history                             # share command history data between shells
 setopt correct                                  # spell check for commands only
 setopt autocd                                   # automatically cd to paths
+setopt extendedglob
 #unsetopt bgnice                                 # don't nice bg command
 #unsetopt autoparamslash                         #
 #unsetopt beep                                   # disable beep
@@ -110,6 +103,20 @@ setopt autocd                                   # automatically cd to paths
 #c Keybindings
 #------------------------------
 bindkey -v
+
+autoload -Uz narrow-to-region
+_history-incremental-preserving-pattern-search-backward() {
+  local state
+  MARK=CURSOR  # magick, else multiple ^R don't work
+  narrow-to-region -p "$LBUFFER${BUFFER:+>> }" -P "${BUFFER:+ <<}$RBUFFER" -S state
+  zle end-of-history
+  zle history-incremental-pattern-search-backward
+  narrow-to-region -R state
+}
+zle -N _history-incremental-preserving-pattern-search-backward
+bindkey "^R" _history-incremental-preserving-pattern-search-backward
+bindkey -M isearch "^R" history-incremental-pattern-search-backward
+bindkey "^S" history-incremental-pattern-search-forward
 
 case $TERM in
 xterm-256color)
