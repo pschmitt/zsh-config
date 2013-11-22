@@ -70,6 +70,7 @@ alias ro="start openvpn@Romania"
 alias rod="stop openvpn@Romania transmission"
 alias ch="start openvpn@Switzerland"
 alias chd="stop openvpn@Switzerland transmission"
+alias ipa="ip a"
 
 # Gaming
 alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
@@ -199,3 +200,8 @@ if hash n_login 2> /dev/null; then
     alias 50btc="sudo bfgminer -o http://pool.50btc.com:8332 -u $(n_login pool.50btc.com) -p $(n_login -p pool.50btc.com) -d 1 -v 2 -w 256 -g 4 -k phatk -I 8"
     alias btccz="sudo bfgminer -o stratum.bitcoin.cz:3333 -u $(n_login stratum.bitcoin.cz) -p $(n_login -p stratum.bitcoin.cz) -d 1 -v 1 -w 256 -g 4 -k phatk -I 8"
 fi
+
+# Systemd
+alias syctl="sudo systemctl"
+compdef _systemctl sysctl=systemctl
+alias jxf="sudo journalctl -xf"
