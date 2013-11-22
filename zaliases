@@ -29,16 +29,13 @@ alias wine="env WINEARCH=win32 wine"
 alias winetricks"env WINEARCH=win32 winetricks"
 alias x=extract
 alias wget="wget -c"
-alias pwsafe="pwsafe.sh"
 alias xdspv="export DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority"
 
 # Change dir
 alias cda="cd /home/pschmitt/"
 alias cdb="cd /home/pschmitt/bin"
 alias cdd="cd /home/pschmitt/downloads"
-alias cdt="cd /home/pschmitt/temp"
-alias cdphp="cd /home/pschmitt/public_html/php"
-alias cdcpp="cd /home/pschmitt/uni/lectures/computer_science/programming/cpp"
+alias cdt="cd /home/pschmitt/tmp"
 
 # Systemd
 alias enable="sudo systemctl enable"
@@ -60,23 +57,13 @@ alias yrm="yaourt -Rsn"
 alias yrf="yaourt -Rcsn"
 alias ycl="yaourt -Scc"
 alias ylu="sudo rm -rf /var/lib/pacman/db.lck"
-alias yainsd='yaourt -S --asdeps' # Install given package(s) as dependencies of another package
+alias yasdep='yaourt -S --asdeps' # Install given package(s) as dependencies of another package
 
 # Device mouting and sync
-#alias mount="sudo mount"
-#alias umount="sudo umount"
-alias mslxl="sshfs -o follow_symlinks pschmitt@laxlinux:/home/pschmitt /mnt/laxlinux"
-alias mstl="sshfs pschmitt@stl-s-studwork.htw-saarland.de:/export/home_09/pschmitt /mnt/pschmitt@stl"
-alias ustl="umount /mnt/pschmitt@stl"
-alias mlax='eval "curlftpfs u54848389:$(pwsafe -p ftp.laxlinux)@laxlinux.net /mnt/laxlinux.net"'
-alias ulax="sudo umount /mnt/laxlinux.net"
 alias laxsync="ftpsync -p ftpserver=laxlinux.net ftpdir=/public_html/php /home/pschmitt/public_html/php/php_project/public_html ignoremask=logs+.htaccess+music+git"
 alias mount-iso="mount -o loop"
 
 # Network
-alias neth="sudo netcfg -r aids_netz"
-alias wd="wicd-curses"
-alias myip="wget --quiet -O - checkip.dyndns.org | sed -e 's/[^:]*: //' -e 's/<.*$//'"
 alias firefoxg="firefox -P guest"
 alias wank="firefox-fullscreenhack -P 'porn' -no-remote -private"
 alias ro="start openvpn@Romania"
@@ -86,14 +73,14 @@ alias chd="stop openvpn@Switzerland transmission"
 
 # Gaming
 alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
-#alias css="WINEPREFIX=/mnt/iHD/.wine32_css wine 'C:\Program Files\Steam\Steam.exe'"
 
 # SSH
 alias sstl="ssh pschmitt@stl-s-studwork.htw-saarland.de"
+alias slio="ssh lxl.io"
 alias slxl="ssh pschmitt@LaXLinux"
 alias sscl="ssh laxlinux-cl"
 alias sspi="ssh alarmpi"
-alias ssrpi="ssh pschmitt@lxl.laxlinux.net"
+alias ssrpi="ssh pschmitt@pi.lxl.io"
 alias srlxl="ssh root@LaXLinux"
 
 # Remote calls
@@ -119,30 +106,21 @@ alias wvim="vim ~/.wmii/wmiirc"
 alias ivim="vim $XDG_CONFIG_HOME/i3/config"
 
 # Security
-alias rm -rf /="echo No way..."
-alias sudo rm -rf /="echo No way..."
 alias logkeys="sudo logkeys -s --no-func-keys -m /usr/share/lkmaps/de.map -o /home/pschmitt/.logkeys/logs/sniffed.log"
 
 # Apps
 alias trc="transmission-remote-cli"
-#alias mutt="mutt-export"
 alias sad="sudo adb start-server"
 alias todo="note -t"
 alias hdcam="mplayer tv:// -tv driver=v4l2:width=1920:height=1080:device=/dev/video0 -fps 40"
-#alias mplaybt="mplayer -ao alsa:device=btheadset"
 
-alias opera="LD_PRELOAD=/usr/lib/libfshack-npapi.so opera -nomail"
+# QR codes
 alias qr="qrencode -t ansi -o - "
 alias qrscan="LD_PRELOAD=/usr/lib/v4l1compat.so zbarcam --raw /dev/video0"
 
 # Work
 alias pysrv="python2 -m SimpleHTTPServer & $BROWSER localhost:8000 && fg"
-alias p2drop="rsync -arP ~/uni/vorlesungen/programmierung ~/Dropbox/"
-alias bcpup="sudo rsync -pgEoarP --delete /home/pschmitt /media/eHD/backup/LaXLinux-CL/home/"
 alias gcc="gcc -Wall -pedantic"
-#alias eclipse="eclipse -noSplash"
-alias xerces="java -classpath $HOME/uni/lectures/metasprachen/xerces-2_11_0/xercesImpl.jar:$HOME/uni/lectures/metasprachen/xerces-2_11_0/xercesSamples.jar:. sax.Counter -v"
-alias xalan="java -cp /usr/share/java/xalan.jar org.apache.xalan.xslt.Process"
 
 # Development 
 # KeyringDroid
