@@ -149,36 +149,26 @@ wt() {
 }
 
 status() {
-    sudo systemctl status "$*"
+    for arg in $*; do
+        sudo systemctl status $arg 
+    done
 }
 
 start() {
     for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg start
-        } || { 
-            sudo systemctl start $arg 
-        }
+        sudo systemctl start $arg 
     done
 }
 
 restart() {
     for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg restart
-        } || { 
-            sudo systemctl restart $arg 
-        }
+        sudo systemctl restart $arg 
     done
 }
 
 stop() {
     for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg stop
-        } || { 
-            sudo systemctl stop $arg 
-        }
+        sudo systemctl stop $arg 
     done
 }
 
@@ -186,6 +176,12 @@ prepend() {
     sed -i "1i $1" $2
 }
 
+# output a specific line of a file
+# $1: line number ; $2: file
+line () {
+	head -n $1 $2 | tail -1
+}
+ 
 mkcd() {
     mkdir -p "$@" && cd "$@"
 }
@@ -202,27 +198,20 @@ c () {
 alias c="noglob c" # do not glob (expand) wildcards, like: c 12*3
 
 function proxyon() {
-        # echo -n "username:"
-        # read -es username
-        # echo -n "password:"
-        # read -s password
-        # export http_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        # export https_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        # export ftp_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        export http_proxy="www-proxy.htw-saarland.de:3128"
-        export https_proxy="www-proxy.htw-saarland.de:3128"
-        export ftp_proxy="www-proxy.htw-saarland.de:3128"
-        echo -e "Proxy environment variable set."
+    export http_proxy="www-proxy.htw-saarland.de:3128"
+    export https_proxy="www-proxy.htw-saarland.de:3128"
+    export ftp_proxy="www-proxy.htw-saarland.de:3128"
+    echo -e "Proxy environment variable set."
 }
 
 function proxyoff() {
     unset HTTP_PROXY
-        unset http_proxy
-        unset https_proxy
-        unset HTTPS_PROXY
-        unset FTP_PROXY
-        unset ftp_proxy
-        echo -e "\nProxy environment variable removed."
+    unset http_proxy
+    unset https_proxy
+    unset HTTPS_PROXY
+    unset FTP_PROXY
+    unset ftp_proxy
+    echo -e "\nProxy environment variable removed."
 }
 
 rationalise-dot() {
@@ -329,12 +318,6 @@ bak() {
     fi
 }
 
-# output a specific line of a file
-# $1: line number ; $2: file
-line () {
-	head -n $1 $2 | tail -1
-}
- 
 # swap 2 filenames around
 swp() { 
     if [ $# -ne 2 ]; then
@@ -364,9 +347,6 @@ stop_alarm () {
     fi
 }
 
-# umount + remove directory (only if mounted under /media)
-umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
-
 # fav pron
 pfx() { 
     local pfile=$HOME/videos/porn/.bookmarks
@@ -378,6 +358,7 @@ pfx() {
     xsel -b >> $pfile
     echo >> $pfile
 }
+
 pf() {
     [[ -z "$1" ]] && { echo "Please provide a URL."; exit 1;}
     local pfile=$HOME/videos/porn/.bookmarks
