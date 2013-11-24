@@ -31,6 +31,8 @@ zstyle :compinstall filename "$ZDOTDIR/.zshrc"
 autoload -U compinit
 compinit
 setopt completealiases
+# Expand aliases and use the right completion
+setopt no_complete_aliases
 
 setopt autopushd
 setopt pushdminus
@@ -59,6 +61,8 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:killall:*' menu yes select
+# Ignore completion functions for commands you don’t have
+zstyle ':completion:*:functions' ignored-patterns '_*'
 
 compctl -k "(count debug primary secondary tertiary toggle extend copy)" xrdr
 
