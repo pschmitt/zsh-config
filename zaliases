@@ -163,6 +163,7 @@ compdef _git gc=git-commit
 alias gca='git commit -v -a'
 compdef _git gca=git-commit
 alias gm="git commit -m"
+alias gma="git commit -am"
 compdef _git gm=git-commit
 alias gco='git checkout'
 compdef _git gco=git-checkout

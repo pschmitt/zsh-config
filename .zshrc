@@ -28,6 +28,8 @@ SAVEHIST=5000
 # Init and completion
 #------------------------------
 zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+# Precompile the zsh code so that it would be faster
+autoload -U zrecompile
 autoload -U compinit
 compinit
 setopt completealiases
