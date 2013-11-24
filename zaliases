@@ -49,15 +49,16 @@ alias prm="sudo pacman -Rns" # Remove the specified package(s), its configuratio
 
 # Yaourt
 alias y="yaourt"
-compdef _yaourt y
-alias ync="yaourt -S --noconfirm"
-alias yup="yaourt -Syu --aur; if [[ $HOST != 'alarmpi' ]];then /etc/cron.hourly/refresh-pacman_db; fi"
-alias yupnc="yaourt -Syu --noconfirm --aur"
-alias yrm="yaourt -Rsn"
-alias yrf="yaourt -Rcsn"
+alias yasdep='yaourt -S --asdeps' # Install given package(s) as dependencies of another package
 alias ycl="yaourt -Scc"
 alias ylu="sudo rm -rf /var/lib/pacman/db.lck"
-alias yasdep='yaourt -S --asdeps' # Install given package(s) as dependencies of another package
+alias ync="yaourt -S --noconfirm"
+alias yq="yaourt -Q"
+alias yqo="yaourt -Qo"
+alias yrm="yaourt -Rsn"
+alias yrf="yaourt -Rcsn"
+alias yup="yaourt -Syu --aur; if [[ $HOST != 'alarmpi' ]];then /etc/cron.hourly/refresh-pacman_db; fi"
+alias yupnc="yaourt -Syu --noconfirm --aur"
 
 # Device mouting and sync
 alias laxsync="ftpsync -p ftpserver=laxlinux.net ftpdir=/public_html/php /home/pschmitt/public_html/php/php_project/public_html ignoremask=logs+.htaccess+music+git"
