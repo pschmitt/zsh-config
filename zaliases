@@ -38,9 +38,19 @@ alias cdd="cd /home/pschmitt/downloads"
 alias cdt="cd /home/pschmitt/tmp"
 
 # Systemd
+alias syctl="sudo systemctl"
+alias start="sudo systemctl start"
+alias stop="sudo systemctl stop"
+alias restart="sudo systemctl restart"
+alias status="sudo systemctl status"
 alias enable="sudo systemctl enable"
 alias disable="sudo systemctl disable"
 alias ls-enabled="systemctl list-unit-files | grep enabled"
+
+# journalctl
+alias jxf="sudo journalctl -xf"
+alias jb="sudo journalctl -b"
+alias ls-failed="sudo systemctl --failed"
 
 # Pacman
 alias p="sudo pacman"
@@ -144,6 +154,7 @@ compdef _git gl=git-pull
 alias gup='git fetch && git rebase'
 compdef _git gup=git-fetch
 alias gp='git push'
+alias gdf="git diff"
 compdef _git gp=git-push
 gdv() { git diff -w "$@" | view - }
 compdef _git gdv=git-diff
@@ -202,7 +213,3 @@ if hash n_login 2> /dev/null; then
     alias btccz="sudo bfgminer -o stratum.bitcoin.cz:3333 -u $(n_login stratum.bitcoin.cz) -p $(n_login -p stratum.bitcoin.cz) -d 1 -v 1 -w 256 -g 4 -k phatk -I 8"
 fi
 
-# Systemd
-alias syctl="sudo systemctl"
-compdef _systemctl sysctl=systemctl
-alias jxf="sudo journalctl -xf"

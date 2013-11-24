@@ -148,28 +148,9 @@ wt() {
     fi
 }
 
-status() {
-    for arg in $*; do
-        sudo systemctl status $arg 
-    done
-}
-
-start() {
-    for arg in $*; do
-        sudo systemctl start $arg 
-    done
-}
-
-restart() {
-    for arg in $*; do
-        sudo systemctl restart $arg 
-    done
-}
-
-stop() {
-    for arg in $*; do
-        sudo systemctl stop $arg 
-    done
+# Get journal entries for a particular service
+jfs() {
+    sudo journalctl --reverse _SYSTEMD_UNIT="${1}.service"
 }
 
 prepend() {
