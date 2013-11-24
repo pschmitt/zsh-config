@@ -51,7 +51,7 @@ _force_rehash() {
 
 zstyle ':completion:*' completer _force_rehash _complete _match _approximate
 zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle ':completion:*:approximate:*' max-errors 2 numeric
 
 zstyle ':completion:*:processes' command 'ps -ax'
 zstyle ':completion:*:processes-names' command 'ps -aeo comm='
@@ -61,7 +61,6 @@ zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*
 zstyle ':completion:*:*:killall:*' menu yes select
 
 compctl -k "(count debug primary secondary tertiary toggle extend copy)" xrdr
-compdef '_files -W /etc/rc.d' start stop restart
 
 autoload -U promptinit
 promptinit
