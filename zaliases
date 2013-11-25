@@ -46,11 +46,13 @@ alias status="sudo systemctl status"
 alias enable="sudo systemctl enable"
 alias disable="sudo systemctl disable"
 alias ls-enabled="systemctl list-unit-files | grep enabled"
+alias ls-failed="sudo systemctl --failed"
 
 # journalctl
 alias jxf="sudo journalctl -xf"
 alias jb="sudo journalctl -b"
-alias ls-failed="sudo systemctl --failed"
+alias jerr="sudo journalctl -b -p err" # Only show errors since last boot
+alias ju="sudo journalctl -u" # By unit
 
 # Pacman
 alias p="sudo pacman"
