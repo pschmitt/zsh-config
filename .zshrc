@@ -142,6 +142,8 @@ bindkey '\e[3~' delete-char
 bindkey '\e[5~' beginning-of-buffer-or-history
 bindkey '\e[6~' end-of-buffer-or-history
 bindkey '^R'    history-incremental-search-backward # Right-Ctrl + R
+bindkey '\eOC'  forward-word        	# ctrl cursor right
+bindkey '\eOD'  backward-word	    	# ctrl cursor left
 #bindkey '^U' undo
 #bindkey '^R' redo
 ;;
@@ -197,4 +199,9 @@ done
 #------------------------------
 # Plugins 
 #------------------------------
+# Syntax highlighting
 . ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Mouse support
+. ${ZDOTDIR}/plugins/mouse.zsh
+zle-toggle-mouse
+
