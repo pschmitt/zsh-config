@@ -192,3 +192,9 @@ done
 for file in ${ZDOTDIR}/{zaliases_${HOST},zfunctions_${HOST},zprompt_${HOST}}; do
     [[ -r $file ]] && . $file
 done
+
+
+#------------------------------
+# Plugins 
+#------------------------------
+. ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
