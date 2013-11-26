@@ -175,7 +175,7 @@ bindkey "^Xt" tetris ## C-x t to play
 # completion in the middle of a line
 bindkey '^i' expand-or-complete-prefix
 
-## file rename magic (alt+m)
+# file rename magic (alt+m)
 bindkey "^[m" copy-prev-shell-word
 
 # Colors
