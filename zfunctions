@@ -364,3 +364,16 @@ man() {
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
 }
+
+# Echo as root
+secho() {
+    [[ $# -lt 2 ]] && { echo "Usage: secho [-en] string file" 1>&2; return 1; }
+    if [[ "$1" == "-e" || "$1" == "-n" || "$1" == "-en" || "$1" == "-ne" ]]; then
+        local params="$1"
+        shift 1
+        sudo su -c "echo $params \"$1\" >> \"$2\""
+    else
+        echo "Usage: secho [-en] string file" 1>&2
+        return 1
+    fi
+}
