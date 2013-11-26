@@ -185,8 +185,10 @@ eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
 # Source config files
 #------------------------------
 for file in ${ZDOTDIR}/{zaliases,zfunctions,zprompt}; do
-    # Following line breaks scp !
-    #echo "sourcing $file"
     . $file || { print "$file: cannnot source file" && setopt warncreateglobal }
 done
 
+# Host specific config
+for file in ${ZDOTDIR}/{zaliases_${HOST},zfunctions_${HOST},zprompt_${HOST}}; do
+    [[ -r $file ]] && . $file
+done

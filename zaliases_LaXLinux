@@ -1,0 +1,1 @@
+alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db"

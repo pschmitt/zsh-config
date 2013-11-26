@@ -69,7 +69,7 @@ alias yq="yaourt -Q"
 alias yqo="yaourt -Qo"
 alias yrm="yaourt -Rsn"
 alias yrf="yaourt -Rcsn"
-alias yup="yaourt -Syu --aur; if [[ $HOST != 'alarmpi' ]];then /etc/cron.hourly/refresh-pacman_db; fi"
+alias yup="yaourt -Syu --aur"
 alias yupnc="yaourt -Syu --noconfirm --aur"
 
 # Device mouting and sync
