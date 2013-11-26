@@ -1,0 +1,3 @@
+alias lamp='/home/pschmitt/bin/lamps
+alias lon='/home/pschmitt/bin/lamps on
+alias loff='/home/pschmitt/bin/lamps off'
