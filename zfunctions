@@ -162,7 +162,7 @@ prepend() {
 line () {
 	head -n $1 $2 | tail -1
 }
- 
+
 mkcd() {
     mkdir -p "$@" && cd "$@"
 }
@@ -250,7 +250,7 @@ sleeptil () {
 
 countdown() {
     local abort
-    [[ $1 -gt 0 ]] || return 
+    [[ $1 -gt 0 ]] || return
     for (( i=$1; i > 0; i-- ))
     do
         read -k 1 -t 1 -s abort
@@ -299,7 +299,7 @@ bak() {
 }
 
 # swap 2 filenames around
-swp() { 
+swp() {
     if [ $# -ne 2 ]; then
         echo "swap: 2 arguments needed"; return 1
     fi
@@ -322,17 +322,17 @@ stop_alarm () {
 	local stop_cmd="mpc pause && [[ -r $pidfile ]] && kill -9 \"\$(cat $pidfile)\" && rm -rf $pidfile"
 	if [[ "$(hostname)" != "LaXLinux" ]]; then
         ssh $remote_user@$remote_host "$stop_cmd" 2&> /dev/null
-    else 
+    else
         eval "$stop_cmd" 2&> /dev/null
     fi
 }
 
 # fav pron
-pfx() { 
+pfx() {
     local pfile=$HOME/videos/porn/.bookmarks
     touch $pfile
     xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
-    sleep 1 
+    sleep 1
     xdotool key "F6"
     xdotool key ctrl+c
     xsel -b >> $pfile
@@ -349,7 +349,7 @@ pf() {
 adblg() {
     local pkgname=co.schmitt.android
     local apppid=$(adb shell ps | grep $pkgname | cut -c10-15 | awk '{ print $1 }')
-    adb logcat | grep $apppid 
+    adb logcat | grep $apppid
 }
 
 # Colored man pages
@@ -376,4 +376,9 @@ secho() {
         echo "Usage: secho [-en] string file" 1>&2
         return 1
     fi
+}
+
+# Clean makepkg devel directory
+mkpgcl() {
+    rm -rf pkg/ src/ $(basename $PWD)-*.{pkg.tar.xz,src.tar.gz}
 }
