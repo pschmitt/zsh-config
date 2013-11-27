@@ -69,6 +69,7 @@ alias yq="yaourt -Q"
 alias yqo="yaourt -Qo"
 alias yrm="yaourt -Rsn"
 alias yrf="yaourt -Rcsn"
+alias yu="yaourt -U"
 alias yup="yaourt -Syu --aur"
 alias yupnc="yaourt -Syu --noconfirm --aur"
 
@@ -79,11 +80,12 @@ alias mount-iso="mount -o loop"
 # Network
 alias firefoxg="firefox -P guest"
 alias wank="firefox-fullscreenhack -P 'porn' -no-remote -private"
-alias ro="start openvpn@Romania"
-alias rod="stop openvpn@Romania transmission"
-alias ch="start openvpn@Switzerland"
-alias chd="stop openvpn@Switzerland transmission"
+alias ro="start pia@Romania"
+alias rod="stop pia@Romania transmission"
+alias ch="start pia@Switzerland"
+alias chd="stop pia@Switzerland transmission"
 alias ipa="ip a"
+alias catdns="cat /etc/resolv.conf"
 
 # Gaming
 alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
