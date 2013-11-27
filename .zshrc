@@ -1,7 +1,7 @@
 #------------------------------------------------------------------#
 # File:     .zshrc   ZSH resource file                             #
-# Version:  1.2                                                    #
-# Author:   Philipp Schmitt <attentah@gmail.com>                   #
+# Version:  1.3                                                    #
+# Author:   Philipp Schmitt <philipp@schmitt.co>                   #
 #------------------------------------------------------------------#
 #      _________  _   _ ____   ____
 #     |__  / ___|| | | |  _ \ / ___|
@@ -17,11 +17,6 @@
 HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
-
-# Mouse support
-# . ~/temp/mouse.zsh
-# zle-toggle-mouse
-
 
 
 #------------------------------
@@ -83,7 +78,6 @@ zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
 
-
 #------------------------------
 # Options
 #------------------------------
@@ -92,96 +86,92 @@ setopt hist_ignore_dups                         # don't save duplicate commands
 setopt hist_find_no_dups                        # do not print duplicates in history
 setopt hist_reduce_blanks                       # reduce whitespace in history
 setopt hist_save_no_dups                        # older commands that duplicate newer ones are omitted
-setopt hist_verify                              # 
+setopt hist_verify                              #
 #setopt inc_append_history                       # append to histfile instead of rewriting it (multiple shells)
-setopt share_history                             # share command history data between shells
+setopt share_history                            # share command history data between shells
 setopt correct                                  # spell check for commands only
 setopt autocd                                   # automatically cd to paths
 setopt extendedglob
+setopt interactivecomments                      # Allow comments in interactive mode
+#setopt NOclobber                                # echo "test" > file: warn if file exists (Force: !>)
 #unsetopt bgnice                                 # don't nice bg command
 #unsetopt autoparamslash                         #
 #unsetopt beep                                   # disable beep
-
 
 
 #------------------------------
 #c Keybindings
 #------------------------------
 bindkey -v
+zmodload zsh/terminfo
 
 autoload -Uz narrow-to-region
 _history-incremental-preserving-pattern-search-backward() {
   local state
   MARK=CURSOR  # magick, else multiple ^R don't work
-  narrow-to-region -p "$LBUFFER${BUFFER:+>> }" -P "${BUFFER:+ <<}$RBUFFER" -S state
+  narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
   zle end-of-history
   zle history-incremental-pattern-search-backward
   narrow-to-region -R state
 }
 zle -N _history-incremental-preserving-pattern-search-backward
-bindkey "^R" _history-incremental-preserving-pattern-search-backward
+bindkey '^R' _history-incremental-preserving-pattern-search-backward
 bindkey -M isearch "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
+bindkey "${terminfo[khome]}" beginning-of-line    # Home
+bindkey "${terminfo[kend]}"  end-of-line          # End
+bindkey "${terminfo[kich1]}" overwrite-mode       # Insert
+bindkey "${terminfo[kdch1]}" delete-char          # Delete
+bindkey "${terminfo[kcuu1]}" up-line-or-history   # Up
+bindkey "${terminfo[kcud1]}" down-line-or-history # Down
+bindkey "${terminfo[kcub1]}" backward-char        # Left
+bindkey "${terminfo[kcuf1]}" forward-char         # Right
+bindkey "${terminfo[kpp]}"   beginning-of-buffer-or-history # PageUp
+bindkey "${terminfo[knp]}"   end-of-buffer-or-history       # PageDown
+
 case $TERM in
-xterm-256color)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-bindkey '\e[3~' delete-char
-bindkey '\eOc'  forward-word        	# ctrl cursor right
-bindkey '\eOd'  backward-word	    	# ctrl cursor left
-;;
-screen-256color)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-bindkey '^R'    history-incremental-search-backward # Right-Ctrl + R
-bindkey '\eOC'  forward-word        	# ctrl cursor right
-bindkey '\eOD'  backward-word	    	# ctrl cursor left
-#bindkey '^U' undo
-#bindkey '^R' redo
-;;
-screen.linux)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-;;
-linux)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-;;
-rxvt-unicode-256color)
-bindkey '\e[7~' beginning-of-line       # home
-bindkey '\e[8~' end-of-line             # end
-bindkey '\eOc'  forward-word            # ctrl cursor right
-bindkey '\eOd'  backward-word           # ctrl cursor left
-bindkey '\e[3~' delete-char	            # This should not be necessary !
-bindkey '\e[2~' overwrite-mode	    	# Insert
+    xterm-256color)
+        bindkey '\eOc' forward-word  # ctrl-right
+        bindkey '\eOd' backward-word # ctrl-left
+        ;;
+    xterm)
+        bindkey '^[[1;5C' forward-word  # ctrl-right
+        bindkey '^[[1;5D' backward-word # ctrl-left
+        ;;
+    screen-256color)
+        bindkey '^[OC' forward-word  # ctrl-right
+        bindkey '^[OD' backward-word # ctrl-left
+        ;;
+    screen.linux)
+        # TODO
+        ;;
+    linux)
+        bindkey '^[[C' forward-word  # ctrl-right
+        bindkey '^[[D' backward-word # ctrl-left
+        ;;
+    rxvt-unicode-256color)
+        bindkey '\eOc' forward-word  # ctrl-right
+        bindkey '\eOd' backward-word # ctrl-left
+        ;;
 esac
 
-bindkey "^Xt" tetris ## C-x t to play
+# Undo/Redo
+bindkey '^[z' undo # alt-z
+bindkey '^[y' redo # alt-y
+
+# ctrl-x t to play tetris
+bindkey "^Xt" tetris
 
 # completion in the middle of a line
-bindkey '^i' expand-or-complete-prefix
+bindkey '^i' expand-or-complete-prefix # ctrl-i
 
-# file rename magic (alt+m)
-bindkey "^[m" copy-prev-shell-word
+# file rename magic
+bindkey "^[m" copy-prev-shell-word # alt-m
 
 # Colors
 eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
+
 
 #------------------------------
 # Source config files
@@ -197,7 +187,7 @@ done
 
 
 #------------------------------
-# Plugins 
+# Plugins
 #------------------------------
 # Syntax highlighting
 . ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -207,7 +197,6 @@ zle-toggle-mouse
 # fish-like history search using <Up|Down>
 . ${ZDOTDIR}/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 bindkey '^[[A' history-substring-search-up
