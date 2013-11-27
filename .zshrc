@@ -204,4 +204,11 @@ done
 # Mouse support
 . ${ZDOTDIR}/plugins/mouse.zsh
 zle-toggle-mouse
+# fish-like history search using <Up|Down>
+. ${ZDOTDIR}/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
