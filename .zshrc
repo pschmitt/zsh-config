@@ -1,7 +1,7 @@
 #------------------------------------------------------------------#
 # File:     .zshrc   ZSH resource file                             #
-# Version:  1.2                                                    #
-# Author:   Philipp Schmitt <attentah@gmail.com>                   #
+# Version:  1.3                                                    #
+# Author:   Philipp Schmitt <philipp@schmitt.co>                   #
 #------------------------------------------------------------------#
 #      _________  _   _ ____   ____
 #     |__  / ___|| | | |  _ \ / ___|
@@ -18,19 +18,18 @@ HISTFILE=~/.histfile
 HISTSIZE=5000
 SAVEHIST=5000
 
-# Mouse support
-# . ~/temp/mouse.zsh
-# zle-toggle-mouse
-
-
 
 #------------------------------
 # Init and completion
 #------------------------------
 zstyle :compinstall filename "$ZDOTDIR/.zshrc"
+# Precompile the zsh code so that it would be faster
+autoload -U zrecompile
 autoload -U compinit
 compinit
 setopt completealiases
+# Expand aliases and use the right completion
+setopt no_complete_aliases
 
 setopt autopushd
 setopt pushdminus
@@ -51,7 +50,7 @@ _force_rehash() {
 
 zstyle ':completion:*' completer _force_rehash _complete _match _approximate
 zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle ':completion:*:approximate:*' max-errors 2 numeric
 
 zstyle ':completion:*:processes' command 'ps -ax'
 zstyle ':completion:*:processes-names' command 'ps -aeo comm='
@@ -59,9 +58,10 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:killall:*:processes-names' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:*:killall:*' menu yes select
+# Ignore completion functions for commands you don’t have
+zstyle ':completion:*:functions' ignored-patterns '_*'
 
 compctl -k "(count debug primary secondary tertiary toggle extend copy)" xrdr
-compdef '_files -W /etc/rc.d' start stop restart
 
 autoload -U promptinit
 promptinit
@@ -78,7 +78,6 @@ zle -N edit-command-line
 bindkey '\C-x\C-e' edit-command-line
 
 
-
 #------------------------------
 # Options
 #------------------------------
@@ -87,83 +86,39 @@ setopt hist_ignore_dups                         # don't save duplicate commands
 setopt hist_find_no_dups                        # do not print duplicates in history
 setopt hist_reduce_blanks                       # reduce whitespace in history
 setopt hist_save_no_dups                        # older commands that duplicate newer ones are omitted
-setopt hist_verify                              # 
+setopt hist_verify                              #
 #setopt inc_append_history                       # append to histfile instead of rewriting it (multiple shells)
-setopt share_history                             # share command history data between shells
+setopt share_history                            # share command history data between shells
 setopt correct                                  # spell check for commands only
 setopt autocd                                   # automatically cd to paths
 setopt extendedglob
+setopt interactivecomments                      # Allow comments in interactive mode
+#setopt NOclobber                                # echo "test" > file: warn if file exists (Force: !>)
 #unsetopt bgnice                                 # don't nice bg command
 #unsetopt autoparamslash                         #
 #unsetopt beep                                   # disable beep
 
 
-
 #------------------------------
-#c Keybindings
+# Keybindings
 #------------------------------
 bindkey -v
+zmodload zsh/terminfo
 
 autoload -Uz narrow-to-region
 _history-incremental-preserving-pattern-search-backward() {
   local state
   MARK=CURSOR  # magick, else multiple ^R don't work
-  narrow-to-region -p "$LBUFFER${BUFFER:+>> }" -P "${BUFFER:+ <<}$RBUFFER" -S state
+  narrow-to-region -p "$LBUFFER${BUFFER:+>>}" -P "${BUFFER:+<<}$RBUFFER" -S state
   zle end-of-history
   zle history-incremental-pattern-search-backward
   narrow-to-region -R state
 }
 zle -N _history-incremental-preserving-pattern-search-backward
-bindkey "^R" _history-incremental-preserving-pattern-search-backward
+bindkey '^R' _history-incremental-preserving-pattern-search-backward
 bindkey -M isearch "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
-<<<<<<< HEAD
-case $TERM in
-xterm-256color)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-bindkey '\e[3~' delete-char
-bindkey '\eOc'  forward-word        	# ctrl cursor right
-bindkey '\eOd'  backward-word	    	# ctrl cursor left
-;;
-screen-256color)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-bindkey '^R'    history-incremental-search-backward # Right-Ctrl + R
-#bindkey '^U' undo
-#bindkey '^R' redo
-;;
-screen.linux)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-;;
-linux)
-bindkey '\e[1~' beginning-of-line
-bindkey '\e[4~' end-of-line
-bindkey '\e[2~' overwrite-mode
-bindkey '\e[3~' delete-char
-bindkey '\e[5~' beginning-of-buffer-or-history
-bindkey '\e[6~' end-of-buffer-or-history
-;;
-rxvt-unicode-256color)
-bindkey '\e[7~' beginning-of-line       # home
-bindkey '\e[8~' end-of-line             # end
-bindkey '\eOc'  forward-word            # ctrl cursor right
-bindkey '\eOd'  backward-word           # ctrl cursor left
-bindkey '\e[3~' delete-char	            # This should not be necessary !
-bindkey '\e[2~' overwrite-mode	    	# Insert
 [[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line    # Home
 [[ -n "${terminfo[kend]}"  ]] && bindkey "${terminfo[kend]}"  end-of-line          # End
 [[ -n "${terminfo[kich1]}" ]] && bindkey "${terminfo[kich1]}" overwrite-mode       # Insert
@@ -211,23 +166,27 @@ case $TERM in
         ;;
 esac
 
-bindkey "^Xt" tetris ## C-x t to play
+# Undo/Redo
+bindkey '^[z' undo # alt-z
+bindkey '^[y' redo # alt-y
+
+# ctrl-x t to play tetris
+bindkey "^Xt" tetris
 
 # completion in the middle of a line
-bindkey '^i' expand-or-complete-prefix
+bindkey '^i' expand-or-complete-prefix # ctrl-i
 
-## file rename magic (alt+m)
-bindkey "^[m" copy-prev-shell-word
+# file rename magic
+bindkey "^[m" copy-prev-shell-word # alt-m
 
 # Colors
 eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
+
 
 #------------------------------
 # Source config files
 #------------------------------
 for file in ${ZDOTDIR}/{zaliases,zfunctions,zprompt}; do
-    # Following line breaks scp !
-    #echo "sourcing $file"
     . $file || { print "$file: cannnot source file" && setopt warncreateglobal }
 done
 

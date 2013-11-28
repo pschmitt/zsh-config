@@ -1,9 +1,9 @@
 # Following line breaks scp !
 #echo "sourcing $ZDOTDIR/.zshenv"
 
-if [[ -z $(echo $PATH | grep ~/bin) ]]; then
-    export PATH=$PATH:~/bin
-fi
+typeset -U path
+path=(~/bin $path)
+
 export BROWSER=firefox
 
 export VISUAL=vim

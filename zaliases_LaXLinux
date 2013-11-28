@@ -1,0 +1,3 @@
+alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db"
+alias slxl="ssh pschmitt@LaXLinux-CL"
+alias vlxl="vncviewer LaXLinux-CL:5909"

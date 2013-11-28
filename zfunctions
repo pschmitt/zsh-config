@@ -148,42 +148,19 @@ wt() {
     fi
 }
 
-status() {
-    sudo systemctl status "$*"
-}
-
-start() {
-    for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg start
-        } || { 
-            sudo systemctl start $arg 
-        }
-    done
-}
-
-restart() {
-    for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg restart
-        } || { 
-            sudo systemctl restart $arg 
-        }
-    done
-}
-
-stop() {
-    for arg in $*; do
-        command -v rc.d &> /dev/null && { 
-            sudo /etc/rc.d/$arg stop
-        } || { 
-            sudo systemctl stop $arg 
-        }
-    done
+# Get journal entries for a particular service
+jfs() {
+    sudo journalctl --reverse _SYSTEMD_UNIT="${1}.service"
 }
 
 prepend() {
     sed -i "1i $1" $2
+}
+
+# output a specific line of a file
+# $1: line number ; $2: file
+line () {
+	head -n $1 $2 | tail -1
 }
 
 mkcd() {
@@ -202,27 +179,20 @@ c () {
 alias c="noglob c" # do not glob (expand) wildcards, like: c 12*3
 
 function proxyon() {
-        # echo -n "username:"
-        # read -es username
-        # echo -n "password:"
-        # read -s password
-        # export http_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        # export https_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        # export ftp_proxy="http://$username:$password@www-proxy.htw-saarland.de:3128/"
-        export http_proxy="www-proxy.htw-saarland.de:3128"
-        export https_proxy="www-proxy.htw-saarland.de:3128"
-        export ftp_proxy="www-proxy.htw-saarland.de:3128"
-        echo -e "Proxy environment variable set."
+    export http_proxy="www-proxy.htw-saarland.de:3128"
+    export https_proxy="www-proxy.htw-saarland.de:3128"
+    export ftp_proxy="www-proxy.htw-saarland.de:3128"
+    echo -e "Proxy environment variable set."
 }
 
 function proxyoff() {
     unset HTTP_PROXY
-        unset http_proxy
-        unset https_proxy
-        unset HTTPS_PROXY
-        unset FTP_PROXY
-        unset ftp_proxy
-        echo -e "\nProxy environment variable removed."
+    unset http_proxy
+    unset https_proxy
+    unset HTTPS_PROXY
+    unset FTP_PROXY
+    unset ftp_proxy
+    echo -e "\nProxy environment variable removed."
 }
 
 rationalise-dot() {
@@ -280,7 +250,7 @@ sleeptil () {
 
 countdown() {
     local abort
-    [[ $1 -gt 0 ]] || return 
+    [[ $1 -gt 0 ]] || return
     for (( i=$1; i > 0; i-- ))
     do
         read -k 1 -t 1 -s abort
@@ -294,7 +264,6 @@ countdown() {
 }
 
 sdwn() {
-    [[ "$HOST" == "hetzLax" ]] && { echo "You are on $HOST you dumb fuck."; return 0; }
     echo -n "halting in ... "
     countdown 3 && sudo shutdown -h now
     # systemctl poweroff
@@ -329,14 +298,8 @@ bak() {
     fi
 }
 
-# output a specific line of a file
-# $1: line number ; $2: file
-line () {
-	head -n $1 $2 | tail -1
-}
- 
 # swap 2 filenames around
-swp() { 
+swp() {
     if [ $# -ne 2 ]; then
         echo "swap: 2 arguments needed"; return 1
     fi
@@ -359,25 +322,23 @@ stop_alarm () {
 	local stop_cmd="mpc pause && [[ -r $pidfile ]] && kill -9 \"\$(cat $pidfile)\" && rm -rf $pidfile"
 	if [[ "$(hostname)" != "LaXLinux" ]]; then
         ssh $remote_user@$remote_host "$stop_cmd" 2&> /dev/null
-    else 
+    else
         eval "$stop_cmd" 2&> /dev/null
     fi
 }
 
-# umount + remove directory (only if mounted under /media)
-umt() { sudo /bin/umount "$*" && [[ "$*" =~ "^/media/.*$" ]] && sudo rm -rf "$*" }
-
 # fav pron
-pfx() { 
+pfx() {
     local pfile=$HOME/videos/porn/.bookmarks
     touch $pfile
     xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
-    sleep 1 
+    sleep 1
     xdotool key "F6"
     xdotool key ctrl+c
     xsel -b >> $pfile
     echo >> $pfile
 }
+
 pf() {
     [[ -z "$1" ]] && { echo "Please provide a URL."; exit 1;}
     local pfile=$HOME/videos/porn/.bookmarks
@@ -388,7 +349,7 @@ pf() {
 adblg() {
     local pkgname=co.schmitt.android
     local apppid=$(adb shell ps | grep $pkgname | cut -c10-15 | awk '{ print $1 }')
-    adb logcat | grep $apppid 
+    adb logcat | grep $apppid
 }
 
 # Colored man pages
@@ -402,4 +363,22 @@ man() {
     LESS_TERMCAP_ue=$'\E[0m' \
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
+}
+
+# Echo as root
+secho() {
+    [[ $# -lt 2 ]] && { echo "Usage: secho [-en] string file" 1>&2; return 1; }
+    if [[ "$1" == "-e" || "$1" == "-n" || "$1" == "-en" || "$1" == "-ne" ]]; then
+        local params="$1"
+        shift 1
+        sudo su -c "echo $params \"$1\" >> \"$2\""
+    else
+        echo "Usage: secho [-en] string file" 1>&2
+        return 1
+    fi
+}
+
+# Clean makepkg devel directory
+mkpgcl() {
+    rm -rf pkg/ src/ $(basename $PWD)-*.{pkg.tar.xz,src.tar.gz}
 }
