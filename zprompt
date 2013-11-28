@@ -41,18 +41,10 @@ local mydate="%D"
 local line_tty="%y"
 local rootorwhat="%#"
 local return_status="%?"
-local host_color
+local host_color="{red}"
 
 # preview colors
 # for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
-
-# set hostname color
-case $(hostname) in
-    "LaXLinux-CL") host_color="{069}";;
-    "LaXLinux")    host_color="{208}";;
-    "alarmpi")     host_color="{005}";;
-    *)             host_color="{154}";;
-esac
 
 PROMPT="$colorfg{120}$curdir$uncolorfg $bold$colorfg{145}|$uncolorfg$unbold %(!.$bold$colorfg{red}.)$username$unbold$uncolorfg$colorfg{red}:$uncolorfg$colorfg$host_color$hostname$uncolorfg $return_status $colorfg{221}» $uncolorfg"
 
