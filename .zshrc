@@ -118,6 +118,7 @@ bindkey "^R" _history-incremental-preserving-pattern-search-backward
 bindkey -M isearch "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
 
+<<<<<<< HEAD
 case $TERM in
 xterm-256color)
 bindkey '\e[1~' beginning-of-line
@@ -163,6 +164,51 @@ bindkey '\eOc'  forward-word            # ctrl cursor right
 bindkey '\eOd'  backward-word           # ctrl cursor left
 bindkey '\e[3~' delete-char	            # This should not be necessary !
 bindkey '\e[2~' overwrite-mode	    	# Insert
+[[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line    # Home
+[[ -n "${terminfo[kend]}"  ]] && bindkey "${terminfo[kend]}"  end-of-line          # End
+[[ -n "${terminfo[kich1]}" ]] && bindkey "${terminfo[kich1]}" overwrite-mode       # Insert
+[[ -n "${terminfo[kdch1]}" ]] && bindkey "${terminfo[kdch1]}" delete-char          # Delete
+#[[ -n "${terminfo[kcuu1]}" ]] && bindkey "${terminfo[kcuu1]}" up-line-or-history   # Up
+#[[ -n "${terminfo[kcud1]}" ]] && bindkey "${terminfo[kcud1]}" down-line-or-history # Down
+[[ -n "${terminfo[kcub1]}" ]] && bindkey "${terminfo[kcub1]}" backward-char        # Left
+[[ -n "${terminfo[kcuf1]}" ]] && bindkey "${terminfo[kcuf1]}" forward-char         # Right
+[[ -n "${terminfo[kpp]}"   ]] && bindkey "${terminfo[kpp]}"   beginning-of-buffer-or-history # PageUp
+[[ -n "${terminfo[knp]}"   ]] && bindkey "${terminfo[knp]}"   end-of-buffer-or-history       # PageDown
+
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+# if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
+#     function zle-line-init () {
+#         printf '%s' "${terminfo[smkx]}"
+#     }
+#     function zle-line-finish () {
+#         printf '%s' "${terminfo[rmkx]}"
+#     }
+#     zle -N zle-line-init
+#     zle -N zle-line-finish
+# fi
+
+case $TERM in
+    rxvt-unicode-256color) ;&
+    xterm-256color)
+        bindkey '\eOc' forward-word  # ctrl-right
+        bindkey '\eOd' backward-word # ctrl-left
+        ;;
+    xterm)
+        bindkey '^[[1;5C' forward-word  # ctrl-right
+        bindkey '^[[1;5D' backward-word # ctrl-left
+        ;;
+    screen-256color)
+        bindkey '^[OC' forward-word  # ctrl-right
+        bindkey '^[OD' backward-word # ctrl-left
+        ;;
+    screen.linux)
+        # TODO
+        ;;
+    linux)
+        bindkey '^[[C' forward-word  # ctrl-right
+        bindkey '^[[D' backward-word # ctrl-left
+        ;;
 esac
 
 bindkey "^Xt" tetris ## C-x t to play
@@ -185,3 +231,28 @@ for file in ${ZDOTDIR}/{zaliases,zfunctions,zprompt}; do
     . $file || { print "$file: cannnot source file" && setopt warncreateglobal }
 done
 
+# Host specific config
+for file in ${ZDOTDIR}/{zaliases_${HOST},zfunctions_${HOST},zprompt_${HOST}}; do
+    [[ -r $file ]] && . $file
+done
+
+
+#------------------------------
+# Plugins
+#------------------------------
+# Syntax highlighting
+. ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Mouse support
+. ${ZDOTDIR}/plugins/mouse.zsh
+zle-toggle-mouse
+
+# fish-like history search using <Up|Down>
+. ${ZDOTDIR}/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+[[ -n "${terminfo[kcuu1]}" ]] && bindkey "$terminfo[kcuu1]" history-substring-search-up
+[[ -n "${terminfo[kcud1]}" ]] && bindkey "$terminfo[kcud1]" history-substring-search-down
+
+# Why do we need these?!
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
