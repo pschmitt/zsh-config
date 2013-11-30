@@ -371,14 +371,13 @@ secho() {
     if [[ "$1" == "-e" || "$1" == "-n" || "$1" == "-en" || "$1" == "-ne" ]]; then
         local params="$1"
         shift 1
-        sudo su -c "echo $params \"$1\" >> \"$2\""
-    else
-        echo "Usage: secho [-en] string file" 1>&2
-        return 1
     fi
+    sudo su -c "echo $params \"$1\" >> \"$2\""
 }
 
 # Clean makepkg devel directory
 mkpgcl() {
+    unsetopt nomatch
     rm -rf pkg/ src/ $(basename $PWD)-*.{pkg.tar.xz,src.tar.gz}
+    setopt nomatch
 }
