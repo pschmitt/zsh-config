@@ -160,7 +160,7 @@ prepend() {
 # output a specific line of a file
 # $1: line number ; $2: file
 line () {
-	head -n $1 $2 | tail -1
+    sed -n "${1}p" $2
 }
 
 mkcd() {
