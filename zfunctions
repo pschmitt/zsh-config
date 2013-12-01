@@ -276,11 +276,11 @@ rbt() {
 }
 
 # file/dir backup and restore
-# u: undo | f: move
+# -s: Copy instead of moving file
 bak() {
     # TODO There may be a file called "-s"
     # TOOD Refactoring / split / use smart case statement ?
-    [[ "$1" == "-s" ]] && cmd="cp -r" || cmd="mv"
+    [[ "$1" == "-s" ]] && cmd="cp -a" || cmd="mv"
     [[ $# -eq 2 ]] && shift
     if [[ "$1" =~ ".*\.bak" ]]; then
         eval $cmd -i "$1" "${1:r}"
@@ -291,7 +291,7 @@ bak() {
             [[ -e "${file}.bak" ]] && file="${file}.bak" || { echo "No such file or dir: $file"; return 1; }
         fi
         if [[ "$file" =~ ".*\.bak" ]]; then
-            eval $cmd -i "$file" "${1:r}"
+            eval $cmd -i "$file" "${file:r}"
         else
             eval $cmd -i "$file{,.bak}"
         fi
