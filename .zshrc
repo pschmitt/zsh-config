@@ -48,7 +48,13 @@ _force_rehash() {
         return 1 # Because we didn't really complete anything
 }
 
-zstyle ':completion:*' completer _force_rehash _complete _match _approximate
+# Rehash after pacman/yaourt command
+TRAPUSR1() { rehash }
+precmd() {
+    [[ $history[$[ HISTCMD -1 ]] == *(pacman|yaourt)* ]] && killall -USR1 zsh
+}
+
+zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 2 numeric
 
