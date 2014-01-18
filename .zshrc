@@ -209,8 +209,8 @@ done
 . ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Mouse support
-. ${ZDOTDIR}/plugins/mouse.zsh
-zle-toggle-mouse
+# . ${ZDOTDIR}/plugins/mouse.zsh
+# zle-toggle-mouse
 
 # fish-like history search using <Up|Down>
 . ${ZDOTDIR}/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
