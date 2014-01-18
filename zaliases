@@ -101,9 +101,9 @@ alias srlxl="ssh root@LaXLinux"
 
 # Remote calls
 alias mo="ssh pschmitt@laxlinux xset dpms force on -display :0"
-alias lamp='ssh pschmitt@alarmpi /home/pschmitt/bin/lamps'
-alias lon='ssh pschmitt@alarmpi /home/pschmitt/bin/lamps on'
-alias loff='ssh pschmitt@alarmpi /home/pschmitt/bin/lamps off'
+alias lamp='ssh bender@alarmpi sudo ~bender/bin/lamps'
+alias lon='ssh bender@alarmpi sudo ~bender/bin/lamps on'
+alias loff='ssh bender@alarmpi sudo ~bender/bin/lamps off'
 
 # VNC
 alias vlxl="vncviewer LaXLinux:5909"
