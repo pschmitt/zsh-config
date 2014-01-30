@@ -98,6 +98,7 @@ alias sscl="ssh laxlinux-cl"
 alias sspi="ssh alarmpi"
 alias ssrpi="ssh pschmitt@pi.lxl.io"
 alias srlxl="ssh root@LaXLinux"
+alias sskad="ssh -i /etc/openvpn/skad/philipp.key philipp@10.8.0.1"
 
 # Remote calls
 alias mo="ssh pschmitt@laxlinux xset dpms force on -display :0"
