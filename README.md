@@ -32,7 +32,9 @@ setopt no_global_rcs
 
 # Environmnet variables
 export XDG_CONFIG_HOME="$HOME/.config"
+# Move zsh config to $XDG_CONFIG_HOME
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# Move vim config to $XDG_CONFIG_HOME
 export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 EOM
 ```
