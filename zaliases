@@ -36,6 +36,10 @@ alias cda="cd /home/pschmitt/"
 alias cdb="cd /home/pschmitt/bin"
 alias cdd="cd /home/pschmitt/downloads"
 alias cdt="cd /home/pschmitt/tmp"
+alias cdk="cd /srv/nginx/skad.co"
+alias cds="cd /srv/nginx/schmitt.co"
+alias cdl="cd /srv/nginx/lxl.io"
+alias cdn="cd /srv/nginx"
 
 # Systemd
 alias syctl="sudo systemctl"
@@ -89,6 +93,9 @@ alias catdns="cat /etc/resolv.conf"
 
 # Gaming
 alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
+
+# lulz
+alias ftg='echo "Ferme ta gueule fils de pute" | espeak -v fr'
 
 # SSH
 alias sstl="ssh pschmitt@stl-s-studwork.htw-saarland.de"
