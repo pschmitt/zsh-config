@@ -32,12 +32,15 @@ alias wget="wget -c"
 alias xdspv="export DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority"
 
 # Change dir
-alias cda="cd /home/pschmitt/"
 alias cdb="cd /home/pschmitt/bin"
 alias cdd="cd /home/pschmitt/downloads"
 alias cdt="cd /home/pschmitt/tmp"
 alias cdk="cd /srv/nginx/skad.co"
+alias cdkp="cd /srv/nginx/skad.co/plugins"
+alias cdkt="cd /srv/nginx/skad.co/themes/pico-flatui-blog"
 alias cds="cd /srv/nginx/schmitt.co"
+alias cdsp="cd /srv/nginx/schmitt.co/plugins"
+alias cdst="cd /srv/nginx/schmitt.co/themes/pico-pure"
 alias cdl="cd /srv/nginx/lxl.io"
 alias cdn="cd /srv/nginx"
 
