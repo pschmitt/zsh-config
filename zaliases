@@ -104,7 +104,7 @@ alias slxl="ssh pschmitt@LaXLinux"
 alias sscl="ssh laxlinux-cl"
 alias sspi="ssh alarmpi"
 alias ssrpi="ssh pschmitt@pi.lxl.io"
-alias srlxl="ssh root@LaXLinux"
+alias srlxl="ssh -f -N -L 2222:laxlinux:22 pi.lxl.io; ssh -p 2222 localhost"
 alias sskad="ssh -i /etc/openvpn/skad/philipp.key philipp@10.8.0.1"
 
 # Remote calls
