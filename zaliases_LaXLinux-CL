@@ -1,0 +1,1 @@
+alias sylxl="synergys; ssh laxlinux -- zsh -i -c 'xdspv; synergyc laxlinux-cl; setxkbmap de'"
