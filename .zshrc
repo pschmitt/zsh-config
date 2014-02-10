@@ -211,6 +211,9 @@ done
 # Autoenv
 . ${ZDOTDIR}/plugins/autoenv/activate.sh
 
+# z
+. ${ZDOTDIR}/plugins/z/z.sh
+
 # Mouse support
 # . ${ZDOTDIR}/plugins/mouse.zsh
 # zle-toggle-mouse
