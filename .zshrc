@@ -51,7 +51,7 @@ _force_rehash() {
 # Rehash after pacman/yaourt command
 TRAPUSR1() { rehash }
 precmd() {
-    [[ $history[$[ HISTCMD -1 ]] == *(pacman|yaourt)* ]] && killall -USR1 zsh
+    [[ $history[$[ HISTCMD -1 ]] == (pacman|yaourt|yup|yupnc|ync|yrm|yrf|y -S|y )* ]] && killall -USR1 zsh
 }
 
 zstyle ':completion:*' completer _complete _match _approximate
