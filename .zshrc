@@ -208,6 +208,9 @@ done
 # Syntax highlighting
 . ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Autoenv
+. ${ZDOTDIR}/plugins/autoenv/activate.sh
+
 # Mouse support
 # . ${ZDOTDIR}/plugins/mouse.zsh
 # zle-toggle-mouse
