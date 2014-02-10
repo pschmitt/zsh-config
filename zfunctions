@@ -123,6 +123,14 @@ function current_branch() {
     echo ${ref#refs/heads/}
 }
 
+# Add a cloned repository as a submodule
+function submodule_add() {
+    [[ -n $1 ]] || { echo "Usage: $0 SUBMODULE_DIR"; return 1; }
+    git status >/dev/null 2>&1 || { echo 'Not a git repo. Exiting.'; return 1; }
+    local git_url=$(cat $1/.git/config | grep url | awk '{ print $3 }')
+    git submodule add $git_url $1
+}
+
 # Pastie
 sprunge() {
     $@ | curl -F 'sprunge=<-' http://sprunge.us
@@ -381,3 +389,14 @@ mkpgcl() {
     rm -rf pkg/ src/ $(basename $PWD)-*.{pkg.tar.xz,src.tar.gz}
     setopt nomatch
 }
+
+# Generate 4096 SSL key in /etc/ssl/nginx/
+genssl() {
+    cd /etc/ssl/conf
+    openssl genrsa -out "$1".key 4096
+    chmod 600 "$1".key
+    openssl req -new -key "$1".key -out "$1".csr
+    openssl x509 -req -days 365 -in "$1".csr -signkey "$1".key -out "$1".crt
+    cd -
+}
+

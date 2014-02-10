@@ -169,16 +169,17 @@ compdef _git gl=git-pull
 alias gup='git fetch && git rebase'
 compdef _git gup=git-fetch
 alias gp='git push'
-alias gdf="git diff"
 compdef _git gp=git-push
-gdv() { git diff -w "$@" | view - }
+alias gdf='git diff'
+alias gdfc='git diff --cached'
+gdv() { git diff -w '$@' | view - }
 compdef _git gdv=git-diff
 alias gc='git commit -v'
 compdef _git gc=git-commit
 alias gca='git commit -v -a'
 compdef _git gca=git-commit
-alias gm="git commit -m"
-alias gma="git commit -am"
+alias gm='git commit -m'
+alias gma='git commit -am'
 compdef _git gm=git-commit
 alias gco='git checkout'
 compdef _git gco=git-checkout
@@ -203,8 +204,12 @@ alias gmrg='git merge'
 compdef _git gmrg=git-merge
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
+# Clone from clipboard
 alias gcx='git clone $(xsel -b)'
 alias gcxr='git clone --recursive $(xsel -b)'
+# Clean current repo
+alias gclf='git clean -d -f -f; git reset --hard HEAD;'
+
 
 # Git and svn mix
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
