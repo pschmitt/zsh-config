@@ -127,7 +127,7 @@ function current_branch() {
 function submodule_add() {
     [[ -n $1 ]] || { echo "Usage: $0 SUBMODULE_DIR"; return 1; }
     git status >/dev/null 2>&1 || { echo 'Not a git repo. Exiting.'; return 1; }
-    local git_url=$(cat $1/.git/config | grep url | awk '{ print $3 }')
+    local git_url=$(cat $1/.git/config | grep -m1 url | awk '{ print $3 }')
     git submodule add $git_url $1
 }
 
@@ -327,8 +327,8 @@ stop_alarm () {
     local pidfile=/tmp/alarm.pid
     local remote_user=pschmitt
     local remote_host=LaXLinux
-	local stop_cmd="mpc pause && [[ -r $pidfile ]] && kill -9 \"\$(cat $pidfile)\" && rm -rf $pidfile"
-	if [[ "$(hostname)" != "LaXLinux" ]]; then
+    local stop_cmd="mpc pause && [[ -r $pidfile ]] && kill -9 \"\$(cat $pidfile)\" && rm -rf $pidfile"
+    if [[ "$(hostname)" != "LaXLinux" ]]; then
         ssh $remote_user@$remote_host "$stop_cmd" 2&> /dev/null
     else
         eval "$stop_cmd" 2&> /dev/null
