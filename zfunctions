@@ -131,6 +131,11 @@ function submodule_add() {
     git submodule add $git_url $1
 }
 
+# Clone from my username
+function gcs() {
+    git clone https://github.com/$USER/$1
+}
+
 # Pastie
 sprunge() {
     $@ | curl -F 'sprunge=<-' http://sprunge.us
