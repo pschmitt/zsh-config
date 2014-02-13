@@ -9,7 +9,7 @@ slay() {
 }
 
 # Archive extractor
-function extract() {
+extract() {
     local remove_archive
     local success
     local file_name
@@ -118,13 +118,13 @@ cb() {
 }
 
 # print current git branch to stdout
-function current_branch() {
+current_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
     echo ${ref#refs/heads/}
 }
 
 # Add a cloned repository as a submodule
-function submodule_add() {
+submodule_add() {
     [[ -n $1 ]] || { echo "Usage: $0 SUBMODULE_DIR"; return 1; }
     git status >/dev/null 2>&1 || { echo 'Not a git repo. Exiting.'; return 1; }
     local git_url=$(cat $1/.git/config | grep -m1 url | awk '{ print $3 }')
@@ -132,7 +132,7 @@ function submodule_add() {
 }
 
 # Clone from my username
-function gcs() {
+gcs() {
     git clone https://github.com/$USER/$1
 }
 
@@ -191,14 +191,14 @@ c () {
 }
 alias c="noglob c" # do not glob (expand) wildcards, like: c 12*3
 
-function proxyon() {
+proxyon() {
     export http_proxy="www-proxy.htw-saarland.de:3128"
     export https_proxy="www-proxy.htw-saarland.de:3128"
     export ftp_proxy="www-proxy.htw-saarland.de:3128"
     echo -e "Proxy environment variable set."
 }
 
-function proxyoff() {
+proxyoff() {
     unset HTTP_PROXY
     unset http_proxy
     unset https_proxy
