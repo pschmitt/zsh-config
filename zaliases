@@ -22,6 +22,7 @@ alias lp1="lp -o fit-to-page -o media=A4" # Print file to one single page (scale
 alias ls="ls --color=auto"
 alias mv="nocorrect mv"
 alias mkdir="nocorrect mkdir"
+alias rgrep="grep -R"
 alias rsrc="source $ZDOTDIR/.zshrc"
 alias vim="vim -i $HOME/.cache/vim/viminfo"
 alias svim="sudoedit "
