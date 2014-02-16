@@ -31,6 +31,9 @@ export STEAM_FRAME_FORCE_CLOSE=1
 # Fix "QGtkStyle was unable to detect the current GTK+ theme"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
+# Use secondary camera for artoolkit
+export ARTOOLKIT_CONFIG="v4l2src device=/dev/video1 use-fixed-fps=false ! ffmpegcolorspace ! capsfilter caps=video/x-raw-rgb,bpp=24 ! identity name=artoolkit ! fakesink"
+
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 # [[ $TERM -eq "fbterm" ]] && fbterm&
 
