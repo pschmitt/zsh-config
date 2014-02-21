@@ -1,6 +1,9 @@
 # Following line breaks scp !
 #echo "sourcing $ZDOTDIR/.zshenv"
 
+# Ignore global rc files
+setopt NO_GLOBAL_RCS
+
 typeset -U path
 path=(~/bin $path)
 
