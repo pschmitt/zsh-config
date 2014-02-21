@@ -2,6 +2,9 @@
 # Prompt
 #------------------------------
 
+autoload -U promptinit
+promptinit
+
 setopt prompt_subst
 autoload -Uz vcs_info
 

@@ -25,11 +25,12 @@ SAVEHIST=5000
 zstyle :compinstall filename "$ZDOTDIR/.zshrc"
 # Precompile the zsh code so that it would be faster
 autoload -U zrecompile
+# Completion
 autoload -U compinit
 compinit
-setopt completealiases
 # Expand aliases and use the right completion
-setopt no_complete_aliases
+# Shouldn't that be completealiases?
+setopt no_completealiases
 
 setopt autopushd
 setopt pushdminus
@@ -68,9 +69,6 @@ zstyle ':completion:*:*:killall:*' menu yes select
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 compctl -k "(count debug primary secondary tertiary toggle extend copy)" xrdr
-
-autoload -U promptinit
-promptinit
 
 # auto escape special chars
 autoload -U url-quote-magic
@@ -224,6 +222,8 @@ done
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "$terminfo[kcuu1]" history-substring-search-up
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# Why do we need these?!
+# FIXME: Why do we need these?!
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+
