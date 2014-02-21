@@ -8,8 +8,8 @@ path=(~/bin $path)
 [[ -n "$XDG_CONFIG_HOME" ]] || export XDG_CONFIG_HOME=$HOME/.config
 
 # Use XDG config dir for vim
-export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
+export VIMINIT='let $VIMRC="$VIMDOTDIR/vimrc" | source $VIMRC'
 export VIMPAGER_RC="$VIMDOTDIR/vimpagerrc"
 export VIMPERATOR_RUNTIME="$XDG_CONFIG_HOME/vimperator"
 export VIMPERATOR_INIT=":source $VIMPERATOR_RUNTIME/vimperatorrc"
