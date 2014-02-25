@@ -13,8 +13,8 @@ zstyle ':vcs_info:(hg*|git*):*' get-revision true
 zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
 zstyle ':vcs_info:*' unstagedstr " (%F{red}!%F)"
 
-zstyle ':vcs_info:*' actionformats '%F{green}%b%F'
-zstyle ':vcs_info:*' formats '%F{green}%b%F%u'
+zstyle ':vcs_info:*' actionformats '%F{029}%b%F'
+zstyle ':vcs_info:*' formats '%F{029}%b%F%u'
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b:%r'
 
 
