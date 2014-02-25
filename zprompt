@@ -49,6 +49,6 @@ local host_color="{red}"
 # preview colors
 # for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
 
-PROMPT="$colorfg{120}$curdir$uncolorfg $bold$colorfg{145}|$uncolorfg$unbold %(!.$bold$colorfg{red}.)$username$unbold$uncolorfg$colorfg{red}:$uncolorfg$colorfg$host_color$hostname$uncolorfg $return_status $colorfg{221}» $uncolorfg"
+PROMPT="$colorfg{29}$curdir$uncolorfg $bold$colorfg{102}|$uncolorfg$unbold $colorfg{102}%(!.$bold$colorfg{red}.)$username$unbold$uncolorfg$colorfg{088}:$uncolorfg$colorfg$host_color$hostname$uncolorfg$colorfg{102} $return_status $colorfg{240}» $uncolorfg"
 
 RPROMPT=$'$(vcs_info_wrapper)'
