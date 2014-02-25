@@ -1,3 +1,3 @@
-local host_color="{005}"
+local host_color="{054}"
 # Cange host_color
 PROMPT=$(sed "s/\(%F\){.\{3\}}\(%M%f\)/\1$host_color\2/" <<< $PROMPT)
