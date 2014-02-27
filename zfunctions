@@ -136,6 +136,12 @@ gcs() {
     git clone https://github.com/$USER/$1
 }
 
+wgh() {
+    local url=$(xsel -b)
+    url=$(sed -e 's/\(github.com\)/raw.\1/' -e 's|blob/||' <<< $url)
+    wget $url
+}
+
 # Pastie
 sprunge() {
     $@ | curl -F 'sprunge=<-' http://sprunge.us
