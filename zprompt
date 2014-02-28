@@ -11,12 +11,11 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:(hg*|git*):*' get-revision true
 zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
-zstyle ':vcs_info:*' unstagedstr " (%F{red}!%F)"
+zstyle ':vcs_info:*' unstagedstr " %F{red}%Bu!%b%F"
 
 zstyle ':vcs_info:*' actionformats '%F{029}%b%F'
 zstyle ':vcs_info:*' formats '%F{029}%b%F%u'
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b:%r'
-
 
 # or use pre_cmd, see man zshcontrib
 vcs_info_wrapper() {
@@ -25,8 +24,6 @@ vcs_info_wrapper() {
     echo "${vcs_info_msg_0_}$del"
   fi
 }
-
-# prompt bigfade
 
 local curdir="%~"
 local hostname="%M"
@@ -49,6 +46,6 @@ local host_color="{red}"
 # preview colors
 # for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
 
-PROMPT="$colorfg{29}$curdir$uncolorfg $bold$colorfg{102}|$uncolorfg$unbold $colorfg{102}%(!.$bold$colorfg{red}.)$username$unbold$uncolorfg$colorfg{088}:$uncolorfg$colorfg$host_color$hostname$uncolorfg$colorfg{102} $return_status $colorfg{240}» $uncolorfg"
+PROMPT="$colorfg{29}$curdir$uncolorfg $colorfg{102}|$uncolorfg $colorfg{102}%(!.$colorfg{red}.)$username$uncolorfg$colorfg{088}:$uncolorfg$colorfg$host_color$hostname$uncolorfg$colorfg{102} $return_status $colorfg{240}» $uncolorfg"
 
 RPROMPT=$'$(vcs_info_wrapper)'
