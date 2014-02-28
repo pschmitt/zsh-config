@@ -11,6 +11,10 @@ for ext in sxw doc; do alias -s $ext=soffice; done
 #for ext in gz bz2; do alias -s $ext='tar -xjvf'; done
 for ext in c cpp h hpp java txt PKGBUILD; do alias -s $ext=$EDITOR; done
 
+###
+# XDG_CONFIG_HOME aliases
+#
+alias irssi="irssi --home=$XDG_CONFIG_HOME/irssi"
 
 ###
 # general aliases
@@ -44,6 +48,9 @@ alias cdsp="cd /srv/nginx/schmitt.co/plugins"
 alias cdst="cd /srv/nginx/schmitt.co/themes/pico-pure"
 alias cdl="cd /srv/nginx/lxl.io"
 alias cdn="cd /srv/nginx"
+alias cdx="cd $VIMDOTDIR"
+alias cdx="cd $XDG_CONFIG_HOME"
+alias cdz="cd $ZDOTDIR"
 
 # Systemd
 alias syctl="sudo systemctl"
@@ -132,6 +139,16 @@ alias wvim="vim ~/.wmii/wmiirc"
 
 # i3
 alias ivim="vim $XDG_CONFIG_HOME/i3/config"
+
+# vim
+alias vvim="vim $VIMDOTDIR/vimrc"
+
+# zsh
+alias zvim="vim $ZDOTDIR/.zshrc"
+alias zavim="vim $ZDOTDIR/zaliases"
+alias zahvim="vim $ZDOTDIR/zaliases_$HOST"
+alias zfvim="vim $ZDOTDIR/zfunctions"
+alias zfhvim="vim $ZDOTDIR/zfunctions_$HOST"
 
 # Security
 alias logkeys="sudo logkeys -s --no-func-keys -m /usr/share/lkmaps/de.map -o /home/pschmitt/.logkeys/logs/sniffed.log"
