@@ -210,6 +210,7 @@ done
 . ${ZDOTDIR}/plugins/autoenv/activate.sh
 
 # z
+_Z_DATA=$XDG_DATA_HOME/z
 . ${ZDOTDIR}/plugins/z/z.sh
 
 # Mouse support
