@@ -15,6 +15,7 @@ for ext in c cpp h hpp java txt PKGBUILD; do alias -s $ext=$EDITOR; done
 # XDG_CONFIG_HOME aliases
 #
 alias irssi="irssi --home=$XDG_CONFIG_HOME/irssi"
+alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 ###
 # general aliases
