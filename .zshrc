@@ -14,7 +14,7 @@
 #------------------------------
 # History stuff
 #------------------------------
-HISTFILE=~/.histfile
+HISTFILE=$XDG_DATA_HOME/zhistory
 HISTSIZE=5000
 SAVEHIST=5000
 
