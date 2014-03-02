@@ -27,6 +27,9 @@ export FILER=spacefm
 export PAGER=vimpager
 export MANPAGER=$PAGER
 
+# Non standard?
+export TERMINAL=urxvtc
+
 # De la couleur pour grep
 export GREP_OPTIONS='--color=auto'
 
