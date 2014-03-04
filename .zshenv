@@ -19,6 +19,10 @@ export VIMPAGER_RC="$VIMDOTDIR/vimpagerrc"
 export VIMPERATOR_RUNTIME="$XDG_CONFIG_HOME/vimperator"
 export VIMPERATOR_INIT=":source $VIMPERATOR_RUNTIME/vimperatorrc"
 
+# More XDG hacks
+export RXVT_SOCKET=$XDG_DATA_HOME/urxvt/urxvt-$HOST
+export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer
+
 # Common apps
 export BROWSER=firefox
 export EDITOR=vim
@@ -30,7 +34,7 @@ export MANPAGER=$PAGER
 # Non standard?
 export TERMINAL=urxvtc
 
-# De la couleur pour grep
+# Always use colors with grep
 export GREP_OPTIONS='--color=auto'
 
 # Fix Steam's close button (close -> minimize to tray)

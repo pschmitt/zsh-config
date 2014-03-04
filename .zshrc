@@ -14,7 +14,7 @@
 #------------------------------
 # History stuff
 #------------------------------
-HISTFILE=$XDG_DATA_HOME/zhistory
+HISTFILE=$XDG_DATA_HOME/zsh/zhistory
 HISTSIZE=5000
 SAVEHIST=5000
 
@@ -210,7 +210,7 @@ done
 . ${ZDOTDIR}/plugins/autoenv/activate.sh
 
 # z
-_Z_DATA=$XDG_DATA_HOME/z
+_Z_DATA=$XDG_DATA_HOME/zsh/z
 . ${ZDOTDIR}/plugins/z/z.sh
 
 # Mouse support

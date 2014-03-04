@@ -16,6 +16,7 @@ for ext in c cpp h hpp java txt PKGBUILD; do alias -s $ext=$EDITOR; done
 #
 alias irssi="irssi --home=$XDG_CONFIG_HOME/irssi"
 alias ncmpcpp="ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config"
+alias synergys="synergys -c $XDG_CONFIG_HOME/synergy/synergy.conf"
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 ###
