@@ -46,6 +46,16 @@ local host_color="{red}"
 # preview colors
 # for code in {000..255}; do print -P -- "$code: %F{$code}Test%f"; done
 
+# right prompt
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="$bold$colorfg{036} [NORMAL] $uncolorfg$unbold"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(vcs_info_wrapper) $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
+
 PROMPT="$colorfg{29}$curdir$uncolorfg $colorfg{102}|$uncolorfg $colorfg{102}%(!.$colorfg{red}.)$username$uncolorfg$colorfg{088}:$uncolorfg$colorfg$host_color$hostname$uncolorfg$colorfg{102} $return_status $colorfg{240}» $uncolorfg"
 
-RPROMPT=$'$(vcs_info_wrapper)'
