@@ -25,6 +25,8 @@ alias tmux="tmux -f $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias -g DN='&> /dev/null &'
 alias -g L='|less'
 
+alias sudo='sudo ' # Pass aliases to sudo
+alias tmad="tmux attach -d"
 alias lp1="lp -o fit-to-page -o media=A4" # Print file to one single page (scaled)
 alias ls="ls --color=auto"
 alias mv="nocorrect mv"
@@ -38,6 +40,8 @@ alias winetricks"env WINEARCH=win32 winetricks"
 alias x=extract
 alias wget="wget -c"
 alias xdspv="export DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority"
+# Wake screen and disable screensaver
+alias son="xdspv;xdotool key ctrl;xset dpms force on; xset -dpms; xset s off"
 
 # Change dir
 alias cdb="cd /home/pschmitt/bin"
