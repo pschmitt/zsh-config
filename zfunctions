@@ -349,6 +349,7 @@ stop_alarm () {
 # fav pron
 pfx() {
     local pfile=$HOME/videos/porn/.bookmarks
+    local wid=$(xdotool getactivewindow)
     touch $pfile
     xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
     sleep 1
@@ -356,6 +357,7 @@ pfx() {
     xdotool key ctrl+c
     xsel -b >> $pfile
     echo >> $pfile
+    xdotool windowactivate $wid
 }
 
 pf() {
@@ -402,13 +404,12 @@ mkpgcl() {
     setopt nomatch
 }
 
-# Generate 4096 SSL key in /etc/ssl/nginx/
+# Generate 4096 SSL key
 genssl() {
-    cd /etc/ssl/conf
-    openssl genrsa -out "$1".key 4096
-    chmod 600 "$1".key
-    openssl req -new -key "$1".key -out "$1".csr
-    openssl x509 -req -days 365 -in "$1".csr -signkey "$1".key -out "$1".crt
-    cd -
+    sudo openssl genrsa -out "${1}.key" 4096
+    sudo chmod 600 "${1}.key"
+    sudo openssl req -new -key "${1}.key" -out "${1}.csr" # -conf /tmp/nginx/ca.conf
+    # sudo openssl req -new -key "${1}.key" -out "${1}.csr" -subj "C=FR ST=Lorraine O=lxl.io localityName=Metz commonName=lxl.io organizationalUnitName=lxl.io emailAddress=webmaster@lxl.io"
+    sudo openssl x509 -req -days 365 -in "${1}.csr" -signkey "${1}.key" -out "${1}.crt"
 }
 
