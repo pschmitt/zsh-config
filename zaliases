@@ -93,7 +93,7 @@ alias yrm="yaourt -Rsn"
 alias yrf="yaourt -Rcsn"
 alias yu="yaourt -U"
 alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
-alias yupnc="yaourt -Syu --noconfirm --aur && /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
+alias yupnc="yaourt -Syu --noconfirm --aur; /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
 
 # Device mouting and sync
 alias laxsync="ftpsync -p ftpserver=laxlinux.net ftpdir=/public_html/php /home/pschmitt/public_html/php/php_project/public_html ignoremask=logs+.htaccess+music+git"
