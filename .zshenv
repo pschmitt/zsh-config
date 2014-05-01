@@ -22,6 +22,8 @@ export VIMINIT='let $VIMRC="$VIMDOTDIR/vimrc" | source $VIMRC'
 export VIMPAGER_RC="$VIMDOTDIR/vimpagerrc"
 export VIMPERATOR_RUNTIME="$XDG_CONFIG_HOME/vimperator"
 export VIMPERATOR_INIT=":source $VIMPERATOR_RUNTIME/vimperatorrc"
+export PENTADACTYL_RUNTIME="$XDG_CONFIG_HOME/pentadactyl"
+export PENTADACTYL_INIT=":source $PENTADACTYL_RUNTIME/pentadactylrc"
 
 # More XDG hacks
 export RXVT_SOCKET=$XDG_DATA_HOME/urxvt/urxvt-$HOST
