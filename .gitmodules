@@ -10,3 +10,6 @@
 [submodule "plugins/autoenv"]
 	path = plugins/autoenv
 	url = https://github.com/kennethreitz/autoenv
+[submodule "hosts"]
+	path = hosts
+	url = https://github.com/pschmitt/zsh-config-hosts.git

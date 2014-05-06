@@ -1,1 +1,0 @@
-alias sylxl="killall synergys synergyc; synergys; ssh laxlinux 'killall synergys synergyc; synergyc yoga'"

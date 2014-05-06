@@ -1,4 +1,0 @@
-alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db"
-alias slxl="ssh pschmitt@LaXLinux-CL"
-alias vlxl="vncviewer LaXLinux-CL:5909"
-alias sylxl="killall synergys synergyc; synergys; ssh yoga 'killall synergys synergyc; synergyc laxlinux'"

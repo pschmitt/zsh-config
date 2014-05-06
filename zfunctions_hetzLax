@@ -1,3 +1,0 @@
-sdwn() {
-    echo "You are on $HOST you dumb fuck."
-}
