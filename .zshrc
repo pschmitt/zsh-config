@@ -184,8 +184,9 @@ bindkey '^i' expand-or-complete-prefix # ctrl-i
 bindkey "^[m" copy-prev-shell-word # alt-m
 
 # Colors
-eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
-
+[[ -r $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS ]] && {
+    eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
+}
 
 #------------------------------
 # Source config files
