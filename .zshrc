@@ -55,10 +55,16 @@ precmd() {
     [[ $history[$[ HISTCMD -1 ]] == (pacman|yaourt|yup|yupnc|ync|yrm|yrf|y -S|y )* ]] && killall -USR1 zsh
 }
 
+# Colors
+[[ -r $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS ]] && {
+    eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
+}
+
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 2 numeric
-
+# activate color-completion¬
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}¬
 zstyle ':completion:*:processes' command 'ps -ax'
 zstyle ':completion:*:processes-names' command 'ps -aeo comm='
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
@@ -183,10 +189,6 @@ bindkey '^i' expand-or-complete-prefix # ctrl-i
 # file rename magic
 bindkey "^[m" copy-prev-shell-word # alt-m
 
-# Colors
-[[ -r $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS ]] && {
-    eval $(dircolors -b $XDG_CONFIG_HOME/LS_COLORS/LS_COLORS)
-}
 
 #------------------------------
 # Source config files
