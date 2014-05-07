@@ -235,7 +235,7 @@ alias gcx='git clone $(xsel -b)'
 alias gcxr='git clone --recursive $(xsel -b)'
 # Clean current repo
 alias gclf='git clean -d -f -f; git reset --hard HEAD;'
-
+alias gsmp='git submodule foreach "git submodule update --init --recursive; git checkout master; git pull"'
 
 # Git and svn mix
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
