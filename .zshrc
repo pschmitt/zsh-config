@@ -65,6 +65,8 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 2 numeric
 # activate color-completion¬
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}¬
+zstyle ':completion:*:cache-path' $XDG_CACHE_HOME/zsh/zcompcache
+# TODO Add use-cache!
 zstyle ':completion:*:processes' command 'ps -ax'
 zstyle ':completion:*:processes-names' command 'ps -aeo comm='
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
