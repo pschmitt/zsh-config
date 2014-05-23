@@ -194,8 +194,7 @@ compdef _git gstn=git-status
 compdef _git gl=git-pull
 alias gup='git fetch && git rebase'
 compdef _git gup=git-fetch
-alias gp='git push'
-compdef _git gp=git-push
+# alias gp='git push'
 alias gdf='git diff'
 alias gdfc='git diff --cached'
 gdv() { git diff -w '$@' | view - }

@@ -136,6 +136,16 @@ gcs() {
     git clone https://github.com/$USER/$1
 }
 
+# Git push wrapper with post-push support
+# Source: http://stackoverflow.com/a/3812238
+gp() {
+    local post_push="$(git rev-parse --git-dir)/hooks/post-push"
+    git push "$@" && {
+        [[ -x "$post_push" ]] && "$post_push" "$(current_branch)" "$@"
+    }
+}
+compdef _git gp=git-push
+
 wgh() {
     local url=$(xsel -b)
     url=$(sed -e 's/\(github.com\)/raw.\1/' -e 's|blob/||' <<< $url)
@@ -413,3 +423,4 @@ genssl() {
     sudo openssl x509 -req -days 365 -in "${1}.csr" -signkey "${1}.key" -out "${1}.crt"
 }
 
+# vim: set ft=zsh et ts=4 sw=4 :
