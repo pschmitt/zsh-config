@@ -130,6 +130,11 @@ zle -N _history-incremental-preserving-pattern-search-backward
 bindkey '^R' _history-incremental-preserving-pattern-search-backward
 bindkey -M isearch "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
+# Ctrl-Backspace to remove previous word
+bindkey "^H" backward-kill-word
+# Ctrl-Delete to remove next word
+bindkey '^[[33~' kill-word
+
 
 [[ -n "${terminfo[khome]}" ]] && bindkey "${terminfo[khome]}" beginning-of-line    # Home
 [[ -n "${terminfo[kend]}"  ]] && bindkey "${terminfo[kend]}"  end-of-line          # End
