@@ -414,6 +414,23 @@ mkpgcl() {
     setopt nomatch
 }
 
+# Generate a password
+# Usage: genpw [-a] LENGTH
+# -a: Alphanumeric chars only
+genpw() {
+    local length=10 policy='[:print:]'
+    [[ -n "$1" ]] && {
+        case "$1" in
+            -a) policy='[:alnum:]'
+                [[ -n "$2" ]] && length="$2"
+                ;;
+            -h) echo "$0 [-a] LENGTH"; return ;;
+            *) length="$1" ;;
+        esac
+    }
+    </dev/urandom tr -dc "$policy" | fold -w "$length" | head -1
+}
+
 # Generate 4096 SSL key
 genssl() {
     sudo openssl genrsa -out "${1}.key" 4096
