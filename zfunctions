@@ -414,6 +414,18 @@ mkpgcl() {
     setopt nomatch
 }
 
+# Notify ping
+nping() {
+    [[ -n "$1" ]] && DEST=$1 || DEST=lxl.io
+    while
+    do
+        ping -c 1 lxl.io && {
+            notify-send -a $0 -u critical 'You are online!'
+            break
+        } || sleep 5
+    done
+}
+
 # Generate a password
 # Usage: genpw [-a] LENGTH
 # -a: Alphanumeric chars only
