@@ -1,3 +1,9 @@
+# TODO Only try to create all dirs once (how does gkrm achieve this?)
+# This would be like an "install" function with a lock
+# Maybe there is a buildin ZSH thing we can rely on since ZSH knows when
+# it is run for the first time
+# This would increase performance/responsiveness
+
 # Following line breaks scp !
 #echo "sourcing $ZDOTDIR/.zshenv"
 
@@ -15,6 +21,8 @@ path=(~/bin $path)
 # Decrease key input delay to 10ms
 export KEYTIMEOUT=1
 
+# Remove '/' from wordchars to allow word deletion on files
+export WORDCHARS=$(sed 's|/||' <<< $WORDCHARS)
 
 # Use XDG config dir for vim
 export VIMDOTDIR="$XDG_CONFIG_HOME/vim"
@@ -27,6 +35,7 @@ export PENTADACTYL_INIT=":source $PENTADACTYL_RUNTIME/pentadactylrc"
 
 # More XDG hacks
 export RXVT_SOCKET=$XDG_DATA_HOME/urxvt/urxvt-$HOST
+[[ ! -d $(dirname $RXVT_SOCKET) ]] && mkdir $(dirname $RXVT_SOCKET)
 export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer
 
 # Common apps
@@ -56,17 +65,24 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 # Chrome options
 # export CHROMIUM_USER_FLAGS="--password-store=gnome"
 
+# virtualenvwrapper
+export WORKON_HOME=$XDG_DATA_HOME/venv
+[[ -d $WORKON_HOME ]] || mkdir -p "$WORKON_HOME"
+# Uncomment this to use python2 by default
+# export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
+source /usr/bin/virtualenvwrapper.sh
+
 # Default permissions
 # umask 022
 
 # Proxy HTTP / FTP w/o password
-#export http_proxy="http://proxy.exemple.org:8080"
-#export ftp_proxy="ftp://proxy.exemple.org:8080"
+# export http_proxy="http://proxy.exemple.org:8080"
+# export ftp_proxy="ftp://proxy.exemple.org:8080"
 
 # Proxy HTTP / FTP with password
-#export http_proxy="http://login:password@proxy.exemple.org:8080"
-#export ftp_proxy="ftp://login:password@proxy.exemple.org:8080"
+# export http_proxy="http://login:password@proxy.exemple.org:8080"
+# export ftp_proxy="ftp://login:password@proxy.exemple.org:8080"
 
 # Skip proxy for specific hosts
-#export no_proxy="exemple.org"
+# export no_proxy="exemple.org"
 
