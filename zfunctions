@@ -182,6 +182,10 @@ jfs() {
     sudo journalctl --reverse _SYSTEMD_UNIT="${1}.service"
 }
 
+jfx() {
+    sudo journalctl -xfl _SYSTEMD_UNIT="$1.service"
+}
+
 prepend() {
     sed -i "1i $1" $2
 }
