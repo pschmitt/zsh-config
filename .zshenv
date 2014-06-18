@@ -59,6 +59,10 @@ export STEAM_FRAME_FORCE_CLOSE=1
 # Fix "QGtkStyle was unable to detect the current GTK+ theme"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
+# Pylint
+export PYLINTRC="$XDG_CONFIG_HOME/pylint2/pylintrc"
+export PYLINTHOME="$XDG_DATA_HOME/pylint2.d"
+
 # [[ $FBTERM -eq 1 ]] && export TERM=fbterm
 # [[ $TERM -eq "fbterm" ]] && fbterm&
 
