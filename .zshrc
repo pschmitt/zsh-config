@@ -105,9 +105,10 @@ setopt correct                                  # spell check for commands only
 setopt autocd                                   # automatically cd to paths
 setopt extendedglob
 setopt interactivecomments                      # Allow comments in interactive mode
-#setopt NOclobber                                # echo "test" > file: warn if file exists (Force: !>)
+setopt NOclobber                                # echo "test" > file: warn if file exists (Force: !>)
 #unsetopt bgnice                                 # don't nice bg command
-#unsetopt autoparamslash                         #
+setopt autoparamslash                         #
+setopt autoremoveslash
 #unsetopt beep                                   # disable beep
 
 
@@ -161,7 +162,10 @@ bindkey '^[[33~' kill-word
 # fi
 
 case $TERM in
-    rxvt-unicode-256color) ;&
+    rxvt-unicode-256color)
+        bindkey '^[Oc' forward-word  # ctrl-right
+        bindkey '^[Od' backward-word # ctrl-left
+        ;;
     xterm-256color)
         bindkey '\eOc' forward-word  # ctrl-right
         bindkey '\eOd' backward-word # ctrl-left
@@ -232,6 +236,9 @@ _Z_DATA=$XDG_DATA_HOME/zsh/z
 
 [[ -n "${terminfo[kcuu1]}" ]] && bindkey "$terminfo[kcuu1]" history-substring-search-up
 [[ -n "${terminfo[kcud1]}" ]] && bindkey "$terminfo[kcud1]" history-substring-search-down
+
+# fzf
+. ${ZDOTDIR}/plugins/fzf.zsh
 
 # FIXME: Why do we need these?!
 bindkey '^[[A' history-substring-search-up
