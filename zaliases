@@ -165,7 +165,7 @@ alias logkeys="sudo logkeys -s --no-func-keys -m /usr/share/lkmaps/de.map -o /ho
 # Apps
 alias trc="transmission-remote-cli"
 alias sad="sudo adb start-server"
-alias todo="note -t"
+alias todo="vim -c ':Note TODO'"
 alias hdcam="mplayer tv:// -tv driver=v4l2:width=1920:height=1080:device=/dev/video0 -fps 40"
 
 # QR codes
