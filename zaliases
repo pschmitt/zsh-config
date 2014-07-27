@@ -130,8 +130,8 @@ alias sskad="ssh -i /etc/openvpn/skad/philipp.key philipp@10.8.0.1"
 alias mo="ssh pschmitt@laxlinux xset dpms force on -display :0"
 alias lamp='ssh bender@alarmpi sudo ~bender/bin/lamps'
 alias l="lamp"
-alias lon='ssh bender@alarmpi sudo ~bender/bin/lamps on'
-alias loff='ssh bender@alarmpi sudo ~bender/bin/lamps off'
+alias lon='ssh bender@alarmpi "sudo ~bender/bin/lamps on"'
+alias loff='ssh bender@alarmpi "sudo ~bender/bin/lamps off"'
 
 # VNC
 alias vlxl="vncviewer LaXLinux:5909"
