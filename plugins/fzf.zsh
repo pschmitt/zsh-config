@@ -2,13 +2,13 @@
 # ------------------
 unalias fzf 2> /dev/null
 fzf() {
-  /usr/bin/ruby /home/pschmitt/tmp/fzf/fzf "$@"
+  /usr/bin/ruby $ZDOTDIR/plugins/fzf/fzf "$@"
 }
 export -f fzf > /dev/null
 
 # Auto-completion
 # ---------------
-[[ $- =~ i ]] && source /home/pschmitt/tmp/fzf/fzf-completion.zsh
+# [[ $- =~ i ]] && source $ZDOTDIR/plugins/fzf/fzf-completion.zsh
 
 # Key bindings
 # ------------
@@ -56,8 +56,6 @@ zle     -N    fzf-cd-widget
 bindkey '^[k' fzf-cd-widget
 
 # CTRL-R - Paste the selected command from history into the command line
-# TODO Make this work multiple times!
-# See _history-incremental-preserving-pattern-search-backward()
 fzf-history-widget() {
   LBUFFER=$(fc -l 1 | fzf +s +m -n..,1,2.. | sed "s/ *[0-9*]* *//")
   zle redisplay

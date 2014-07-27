@@ -13,3 +13,6 @@
 [submodule "hosts"]
 	path = hosts
 	url = https://github.com/pschmitt/zsh-config-hosts.git
+[submodule "plugins/fzf"]
+	path = plugins/fzf
+	url = https://github.com/junegunn/fzf
