@@ -74,7 +74,14 @@ export WORKON_HOME=$XDG_DATA_HOME/venv
 [[ -d $WORKON_HOME ]] || mkdir -p "$WORKON_HOME"
 # Uncomment this to use python2 by default
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
-source /usr/bin/virtualenvwrapper.sh
+VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
+[[ -r $VENVWRAPPER ]] && {
+    source $VENVWRAPPER
+    # export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
+    export WORKON_HOME=$XDG_DATA_HOME/venv
+    [[ -d $WORKON_HOME ]] || mkdir -p "$WORKON_HOME"
+}
+unset $VENVWRAPPER
 
 # Default permissions
 # umask 022
