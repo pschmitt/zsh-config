@@ -49,9 +49,6 @@ export MANPAGER=$PAGER
 # Non standard?
 export TERMINAL=urxvtc
 
-# Always use colors with grep
-export GREP_OPTIONS='--color=auto'
-
 # Fix Steam's close button (close -> minimize to tray)
 export STEAM_FRAME_FORCE_CLOSE=1
 

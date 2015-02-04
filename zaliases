@@ -31,6 +31,7 @@ alias lp1="lp -o fit-to-page -o media=A4" # Print file to one single page (scale
 alias ls="ls --color=auto"
 alias mv="nocorrect mv"
 alias mkdir="nocorrect mkdir"
+alias grep='grep --color=auto'
 alias ngrep="grep -n"
 alias rgrep="grep -R"
 alias rsrc="source $ZDOTDIR/.zshrc"
