@@ -1,0 +1,13 @@
+# Create required directories and downlod dependencies
+echo "Running zshinit ($0). You should not see this more than once"
+
+# fzf plugin
+gem install curses
+
+# virtualenvwrapper
+mkdir -p "$WORKON_HOME"
+
+# urxvt
+mkdir -p "$(dirname $RXVT_SOCKET)"
+
+touch $ZINIT_LOCK

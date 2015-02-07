@@ -35,7 +35,6 @@ export PENTADACTYL_INIT=":source $PENTADACTYL_RUNTIME/pentadactylrc"
 
 # More XDG hacks
 export RXVT_SOCKET=$XDG_DATA_HOME/urxvt/urxvt-$HOST
-[[ ! -d $(dirname $RXVT_SOCKET) ]] && mkdir $(dirname $RXVT_SOCKET)
 export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer
 
 # Common apps
@@ -68,7 +67,6 @@ export PYLINTHOME="$XDG_DATA_HOME/pylint2.d"
 
 # virtualenvwrapper
 export WORKON_HOME=$XDG_DATA_HOME/venv
-[[ -d $WORKON_HOME ]] || mkdir -p "$WORKON_HOME"
 # Uncomment this to use python2 by default
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
@@ -76,9 +74,12 @@ VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
     source $VENVWRAPPER
     # export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
     export WORKON_HOME=$XDG_DATA_HOME/venv
-    [[ -d $WORKON_HOME ]] || mkdir -p "$WORKON_HOME"
 }
 unset $VENVWRAPPER
+
+ZINIT_LOCK=~/.local/share/zsh/zinit_completed
+[[ ! -f $ZINIT_LOCK ]] && . $ZDOTDIR/zinit
+unset $ZINIT_LOCK
 
 # Default permissions
 # umask 022
