@@ -10,5 +10,5 @@ mkdir -p "$WORKON_HOME"
 # urxvt
 mkdir -p "$(dirname $RXVT_SOCKET)"
 
-mkdir -p "$(basename $ZINIT_LOCK)"
+mkdir -p "$(dirname $ZINIT_LOCK)"
 touch $ZINIT_LOCK
