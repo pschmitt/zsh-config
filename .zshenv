@@ -77,7 +77,7 @@ VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
 }
 unset $VENVWRAPPER
 
-ZINIT_LOCK=~/.local/share/zsh/zinit_completed
+ZINIT_LOCK=$XDG_DATA_HOME/zsh/zinit_completed
 [[ ! -f $ZINIT_LOCK ]] && . $ZDOTDIR/zinit
 unset $ZINIT_LOCK
 
