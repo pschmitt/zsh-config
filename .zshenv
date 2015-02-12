@@ -66,20 +66,20 @@ export PYLINTHOME="$XDG_DATA_HOME/pylint2.d"
 # export CHROMIUM_USER_FLAGS="--password-store=gnome"
 
 # virtualenvwrapper
-export WORKON_HOME=$XDG_DATA_HOME/venv
+export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
 # Uncomment this to use python2 by default
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
-[[ -r $VENVWRAPPER ]] && {
-    source $VENVWRAPPER
-    # export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
-    export WORKON_HOME=$XDG_DATA_HOME/venv
-}
+[[ -r $VENVWRAPPER ]] && { source $VENVWRAPPER }
 unset $VENVWRAPPER
 
+# zinit
 ZINIT_LOCK=$XDG_DATA_HOME/zsh/zinit_completed
 [[ ! -f $ZINIT_LOCK ]] && . $ZDOTDIR/zinit
 unset $ZINIT_LOCK
+
+export TASKDATA=$XDG_DATA_HOME/task
+export TASKRC=$XDG_CONFIG_HOME/task/taskrc
 
 # Default permissions
 # umask 022

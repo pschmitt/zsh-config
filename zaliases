@@ -34,6 +34,7 @@ alias mkdir="nocorrect mkdir"
 alias grep='grep --color=auto'
 alias ngrep="grep -n"
 alias rgrep="grep -R"
+alias grep="grep --color=auto"
 alias rsrc="source $ZDOTDIR/.zshrc"
 alias vim="vim -i $HOME/.cache/vim/viminfo"
 alias svim="sudoedit "
@@ -254,7 +255,7 @@ alias ggpnp='git pull origin $(current_branch) && git push origin $(current_bran
 compdef ggpnp=git
 
 # Dangerous aliases (contain passwords in clear text)
-if command -v n_login; then
+if command -v n_login > /dev/null; then
     alias scrob="scrobbler -d -u $(n_login last.fm) -5 $(n_login -p last.fm) -l /media/iPodClassic"
     # Bitcoin mining
     alias 50btc="sudo bfgminer -o http://pool.50btc.com:8332 -u $(n_login pool.50btc.com) -p $(n_login -p pool.50btc.com) -d 1 -v 2 -w 256 -g 4 -k phatk -I 8"

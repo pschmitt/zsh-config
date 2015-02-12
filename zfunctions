@@ -368,6 +368,7 @@ pfx() {
     xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
     sleep 1
     xdotool key "F6"
+    # TODO: Check for vimperator in title -> use "yy" instead of "ctrl-c"
     xdotool key ctrl+c
     xsel -b >> $pfile
     echo >> $pfile
@@ -454,6 +455,18 @@ genssl() {
     sudo openssl req -new -key "${1}.key" -out "${1}.csr" # -conf /tmp/nginx/ca.conf
     # sudo openssl req -new -key "${1}.key" -out "${1}.csr" -subj "C=FR ST=Lorraine O=lxl.io localityName=Metz commonName=lxl.io organizationalUnitName=lxl.io emailAddress=webmaster@lxl.io"
     sudo openssl x509 -req -days 365 -in "${1}.csr" -signkey "${1}.key" -out "${1}.crt"
+}
+
+become() {
+    local user="$1"
+    local shell="$2"
+    [[ -z "$user" ]] && { echo "Usage: $0 USER [SHELL]"; return 2; }
+    [[ -z "$shell" ]] && {
+        [[ -n "$SHELL" ]] && shell=$SHELL || {
+            command -v bash > /dev/null && shell="bash" || shell="sh"
+        }
+    }
+    sudo -u "$user" -s "$shell"
 }
 
 # vim: set ft=sh et ts=4 sw=4 :
