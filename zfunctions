@@ -471,15 +471,22 @@ become() {
 
 # Create new virtualenv named after the basename of the current directory
 mkvc() {
-    local python_env="$1"
-    [[ -z "$python_env" ]] && python_env="/usr/bin/python"
-    mkvirtualenv --python="$python_env" "$(basename $PWD)"
+    local python_env=${1:-/usr/bin/python} requirements
+    [[ -r "requirements.txt" ]] && requirements="-r requirements.txt"
+    mkvirtualenv --python="$python_env" "$requirements" "$(basename $PWD)"
+    # Auto env
+    [[ ! -f .env ]] && {
+        echo "workon $(basename $PWD)" > .env
+    } || {
+        echo "workon $(basename $PWD)" >> .env
+    }
 }
 
 rmvc() {
     local venv="$PWD"
     [[ -n "$VIRTUAL_ENV" ]] && { venv="$VIRTUAL_ENV"; deactivate; }
     rmvirtualenv "$(basename $venv)"
+    [[ -w .env ]] && sed -i "/workon $(basename $venv)/d" .env
 }
 
 # vim: set ft=sh et ts=4 sw=4 :
