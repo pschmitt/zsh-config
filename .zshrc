@@ -209,7 +209,7 @@ for file in ${ZDOTDIR}/{zaliases,zfunctions,zprompt}; do
 done
 
 # Host specific config
-for file in ${ZDOTDIR}/hosts/${HOST}/{zaliases,zfunctions,zprompt}; do
+for file in ${ZDOTDIR}/hosts/${HOST}/{zshenv,zshrc,zaliases,zfunctions,zprompt}; do
     [[ -r $file ]] && . $file
 done
 
