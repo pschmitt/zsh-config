@@ -262,3 +262,8 @@ if command -v n_login > /dev/null; then
     alias btccz="sudo bfgminer -o stratum.bitcoin.cz:3333 -u $(n_login stratum.bitcoin.cz) -p $(n_login -p stratum.bitcoin.cz) -d 1 -v 1 -w 256 -g 4 -k phatk -I 8"
 fi
 
+# virtualenvwrapper
+alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
+alias mkvenv="mkvirtualenv"
+alias mkvenv2="mkvirtualenv2"
+alias mkvc2="mkvc /usr/bin/python2"
