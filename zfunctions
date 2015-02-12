@@ -469,11 +469,17 @@ become() {
     sudo -u "$user" -s "$shell"
 }
 
-# Creata new virtualenv named after the basename of the current directory
+# Create new virtualenv named after the basename of the current directory
 mkvc() {
-    local args="$1"
-    [[ -n "$args" ]] && args="-p $args"
-    echo mkvirtualenv $args "$(basename $PWD)"
+    local python_env="$1"
+    [[ -z "$python_env" ]] && python_env="/usr/bin/python"
+    mkvirtualenv --python="$python_env" "$(basename $PWD)"
+}
+
+rmvc() {
+    local venv="$PWD"
+    [[ -n "$VIRTUAL_ENV" ]] && { venv="$VIRTUAL_ENV"; deactivate; }
+    rmvirtualenv "$(basename $venv)"
 }
 
 # vim: set ft=sh et ts=4 sw=4 :
