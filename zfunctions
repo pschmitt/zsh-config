@@ -489,4 +489,9 @@ rmvc() {
     [[ -w .env ]] && sed -i "/workon $(basename $venv)/d" .env
 }
 
+ssh-rm-key() {
+    [[ "$1" =~ '^[0-9]+$' ]] || { echo "Input is not a number" >&2; return 3;}
+    sed -i "${1}d" ~/.ssh/known_hosts
+}
+
 # vim: set ft=sh et ts=4 sw=4 :

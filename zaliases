@@ -119,6 +119,7 @@ alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
 alias ftg='echo "Ferme ta gueule fils de pute" | espeak -v fr'
 
 # SSH
+alias ussh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias sstl="ssh pschmitt@stl-s-studwork.htw-saarland.de"
 alias slio="ssh lxl.io"
 alias slxl="ssh pschmitt@LaXLinux"
