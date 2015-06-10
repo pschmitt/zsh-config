@@ -44,22 +44,15 @@ alias x=extract
 alias wget="wget -c"
 alias xdspv="export DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority"
 # Wake screen and disable screensaver
-alias son="xdspv;xdotool key ctrl;xset dpms force on; xset -dpms; xset s off"
+alias son="xdspv; xdotool key ctrl; xset dpms force on; xset -dpms; xset s off"
 
 # Change dir
-alias cdb="cd /home/pschmitt/bin"
-alias cdd="cd /home/pschmitt/downloads"
-alias cdt="cd /home/pschmitt/tmp"
-alias cdk="cd /srv/nginx/skad.co"
-alias cdkp="cd /srv/nginx/skad.co/plugins"
-alias cdkt="cd /srv/nginx/skad.co/themes/pico-flatui-blog"
-alias cds="cd /srv/nginx/schmitt.co"
-alias cdsp="cd /srv/nginx/schmitt.co/plugins"
-alias cdst="cd /srv/nginx/schmitt.co/themes/pico-pure"
-alias cdl="cd /srv/nginx/lxl.io"
-alias cdn="cd /srv/nginx"
-alias cdx="cd $VIMDOTDIR"
-alias cdx="cd $XDG_CONFIG_HOME"
+alias cdbin="cd ~/bin"
+alias cdconf="cd $XDG_CONFIG_HOME"
+alias cddev="cd ~/dev"
+alias cddl="cd XDG_DOWNLOAD_DIR"
+alias cddocs="cd $XDG_DOCUMENTS_DIR"
+alias cdt="cd ~/tmp"
 alias cdz="cd $ZDOTDIR"
 
 # Systemd
