@@ -7,12 +7,12 @@
 [submodule "plugins/z"]
 	path = plugins/z
 	url = https://github.com/rupa/z
-[submodule "plugins/autoenv"]
-	path = plugins/autoenv
-	url = https://github.com/kennethreitz/autoenv
 [submodule "hosts"]
 	path = hosts
 	url = https://github.com/pschmitt/zsh-config-hosts.git
 [submodule "plugins/fzf"]
 	path = plugins/fzf
 	url = https://github.com/junegunn/fzf
+[submodule "plugins/zsh-autoenv"]
+	path = plugins/zsh-autoenv
+	url = https://github.com/Tarrasch/zsh-autoenv

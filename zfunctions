@@ -473,7 +473,7 @@ become() {
 mkvc() {
     local python_env=${1:-/usr/bin/python} requirements
     [[ -r "requirements.txt" ]] && requirements="-r requirements.txt"
-    mkvirtualenv --python="$python_env" "$requirements" "$(basename $PWD)"
+    eval mkvirtualenv $requirements --python=$python_env \"$(basename $PWD)\"
     # Auto env
     [[ ! -f .env ]] && {
         echo "workon $(basename $PWD)" > .env
@@ -492,6 +492,13 @@ rmvc() {
 ssh-rm-key() {
     [[ "$1" =~ '^[0-9]+$' ]] || { echo "Input is not a number" >&2; return 3;}
     sed -i "${1}d" ~/.ssh/known_hosts
+}
+
+wait-online() {
+    while ! ping -c 1 -W 1 "$1" > /dev/null 2>&1
+    do
+        sleep 1
+    done
 }
 
 # vim: set ft=sh et ts=4 sw=4 :
