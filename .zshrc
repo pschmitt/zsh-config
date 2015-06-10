@@ -221,7 +221,7 @@ done
 . ${ZDOTDIR}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Autoenv
-. ${ZDOTDIR}/plugins/autoenv/activate.sh
+. ${ZDOTDIR}/plugins/zsh-autoenv/autoenv.zsh
 
 # z
 _Z_DATA=$XDG_DATA_HOME/zsh/z
