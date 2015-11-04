@@ -17,6 +17,10 @@ path=(~/bin $path)
 [[ -n "$XDG_CONFIG_HOME" ]] || export XDG_CONFIG_HOME=$HOME/.config
 [[ -n "$XDG_CACHE_HOME"  ]] || export XDG_CACHE_HOME=$HOME/.cache
 [[ -n "$XDG_DATA_HOME"   ]] || export XDG_DATA_HOME=$HOME/.local/share
+[[ -r "${XDG_CONFIG_HOME}/user-dirs.dirs" ]] && {
+    . ${XDG_CONFIG_HOME}/user-dirs.dirs
+    # TODO export variables
+}
 
 # Decrease key input delay to 10ms
 export KEYTIMEOUT=1
@@ -42,7 +46,7 @@ export BROWSER=firefox
 export EDITOR=vim
 export VISUAL=$EDITOR
 export FILER=spacefm
-export PAGER=vimpager
+export PAGER=less
 export MANPAGER=$PAGER
 
 # Non standard?
@@ -80,6 +84,11 @@ unset $ZINIT_LOCK
 
 export TASKDATA=$XDG_DATA_HOME/task
 export TASKRC=$XDG_CONFIG_HOME/task/taskrc
+
+# Disable ansible cowsay
+export ANSIBLE_NOCOWS=1
+
+export AUTOENV_AUTH_FILE=$XDG_DATA_HOME/zsh/autoenv_auth
 
 # Default permissions
 # umask 022
