@@ -475,10 +475,10 @@ mkvc() {
     [[ -r "requirements.txt" ]] && requirements="-r requirements.txt"
     eval mkvirtualenv $requirements --python=$python_env \"$(basename $PWD)\"
     # Auto env
-    [[ ! -f .env ]] && {
-        echo "workon $(basename $PWD)" > .env
+    [[ ! -f .autoenv.zsh ]] && {
+        echo "workon $(basename $PWD)" > .autoenv.zsh
     } || {
-        echo "workon $(basename $PWD)" >> .env
+        echo "workon $(basename $PWD)" >> .autoenv.zsh
     }
 }
 
@@ -486,7 +486,7 @@ rmvc() {
     local venv="$PWD"
     [[ -n "$VIRTUAL_ENV" ]] && { venv="$VIRTUAL_ENV"; deactivate; }
     rmvirtualenv "$(basename $venv)"
-    [[ -w .env ]] && sed -i "/workon $(basename $venv)/d" .env
+    [[ -w .autoenv.zsh ]] && sed -i "/workon $(basename $venv)/d" .autoenv.zsh
 }
 
 ssh-rm-key() {
