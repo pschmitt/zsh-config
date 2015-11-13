@@ -133,7 +133,9 @@ submodule_add() {
 
 # Clone from my username
 gcs() {
-    git clone https://github.com/$USER/$1
+    local repo="$1"
+    shift
+    git clone https://github.com/$USER/$repo $@
 }
 
 # Git push wrapper with post-push support
