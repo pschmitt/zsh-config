@@ -10,9 +10,6 @@
 # Ignore global rc files
 setopt NO_GLOBAL_RCS
 
-typeset -U path
-path=(~/bin $path)
-
 # Make sure XDG dirs are set
 [[ -n "$XDG_CONFIG_HOME" ]] || export XDG_CONFIG_HOME=$HOME/.config
 [[ -n "$XDG_CACHE_HOME"  ]] || export XDG_CACHE_HOME=$HOME/.cache
@@ -89,6 +86,9 @@ export TASKRC=$XDG_CONFIG_HOME/task/taskrc
 export ANSIBLE_NOCOWS=1
 
 export AUTOENV_AUTH_FILE=$XDG_DATA_HOME/zsh/autoenv_auth
+
+# golang
+export GOPATH="$HOME/dev/golang"
 
 # Default permissions
 # umask 022

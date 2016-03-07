@@ -244,4 +244,3 @@ _Z_DATA=$XDG_DATA_HOME/zsh/z
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-
