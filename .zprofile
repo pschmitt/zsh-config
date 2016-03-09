@@ -3,11 +3,8 @@
 # This breaks LANG among other stuff
 source /etc/zsh/zprofile
 
-# Set path
-typeset -U path
-path+=(~/bin "${GOPATH//://bin:}/bin")
+# set up $PATH
+source "${ZDOTDIR}/.pathrc"
 
-# Start Xorg if currently on first tty
-# vt=$(fgconsole 2>/dev/null)
-# (( vt == 1 )) && exec startx -- vt$vt
-# unset vt
+# Start X11
+# source "${ZDOTDIR}/.zstartx"

@@ -1,0 +1,4 @@
+typeset -U path
+path=(~/bin $path ${GOPATH//://bin:}/bin)
+
+# vim: set ft=sh :

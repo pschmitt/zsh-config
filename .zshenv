@@ -90,6 +90,9 @@ export AUTOENV_AUTH_FILE=$XDG_DATA_HOME/zsh/autoenv_auth
 # golang
 export GOPATH="$HOME/dev/golang"
 
+# set up $PATH
+source "${ZDOTDIR}/.pathrc"
+
 # Default permissions
 # umask 022
 
