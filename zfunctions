@@ -503,4 +503,15 @@ wait-online() {
     done
 }
 
+nameserver() {
+    [[ "$#" -lt 1 ]] && { echo "Usage: $0 NAMESERVER [NAMESERVER]..."; return 2; }
+    local n
+    echo '# Managed by nameserver()' | sudo tee /etc/resolv.conf > /dev/null
+    for n in $@
+    do
+        echo "nameserver $n" | sudo tee -a /etc/resolv.conf > /dev/null
+    done
+    cat /etc/resolv.conf
+}
+
 # vim: set ft=sh et ts=4 sw=4 :
