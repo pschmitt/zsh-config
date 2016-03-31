@@ -260,3 +260,6 @@ alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
 alias mkvenv="mkvirtualenv"
 alias mkvenv2="mkvirtualenv2"
 alias mkvc2="mkvc /usr/bin/python2"
+
+# Create a temporary screenshot
+alias tscrot="scrot -s -e 'mv \$f /tmp && echo /tmp/\$f'"
