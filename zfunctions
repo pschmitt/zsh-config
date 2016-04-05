@@ -504,7 +504,8 @@ wait-online() {
 }
 
 nameserver() {
-    [[ "$#" -lt 1 ]] && { echo "Usage: $0 NAMESERVER [NAMESERVER]..."; return 2; }
+    [[ "$#" == 0 ]] && { cat /etc/resolv.conf; return; }
+    [[ "$1" == "-h" ]] && { echo "Usage: $0 NAMESERVER [NAMESERVER]..."; return 2; }
     local n
     echo '# Managed by nameserver()' | sudo tee /etc/resolv.conf > /dev/null
     for n in $@
