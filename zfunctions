@@ -515,4 +515,14 @@ nameserver() {
     cat /etc/resolv.conf
 }
 
+usshpass() {
+    local password="$1"
+    shift
+    sshpass -p "$password" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $@
+}
+
+sslcert() {
+    echo | openssl s_client -showcerts -servername gnupg.org -connect "$1:443" 2>/dev/null | openssl x509 -inform pem -noout -text
+}
+
 # vim: set ft=sh et ts=4 sw=4 :
