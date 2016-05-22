@@ -473,22 +473,26 @@ become() {
 
 # Create new virtualenv named after the basename of the current directory
 mkvc() {
+    local cur_dir="$(basename $PWD)"
     local python_env=${1:-/usr/bin/python} requirements
     [[ -r "requirements.txt" ]] && requirements="-r requirements.txt"
-    eval mkvirtualenv $requirements --python=$python_env \"$(basename $PWD)\"
+    eval mkvirtualenv $requirements --python=$python_env \"$cur_dir\"
     # Auto env
     [[ ! -f .autoenv.zsh ]] && {
-        echo "workon $(basename $PWD)" > .autoenv.zsh
+        echo "workon $cur_dir" > .autoenv.zsh
     } || {
-        echo "workon $(basename $PWD)" >> .autoenv.zsh
+        grep -q "workon $cur_dir" .autoenv.zsh || {
+            echo "workon $cur_dir" >> .autoenv.zsh
+        }
     }
 }
 
 rmvc() {
     local venv="$PWD"
+    local venv_name="$(basename $venv)"
     [[ -n "$VIRTUAL_ENV" ]] && { venv="$VIRTUAL_ENV"; deactivate; }
-    rmvirtualenv "$(basename $venv)"
-    [[ -w .autoenv.zsh ]] && sed -i "/workon $(basename $venv)/d" .autoenv.zsh
+    rmvirtualenv "$venv_name"
+    [[ -w .autoenv.zsh ]] && sed -i "/workon $venv_name)/d" .autoenv.zsh
 }
 
 ssh-rm-key() {
