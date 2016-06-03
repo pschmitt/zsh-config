@@ -489,8 +489,8 @@ mkvc() {
 
 rmvc() {
     local venv="$PWD"
-    local venv_name="$(basename $venv)"
     [[ -n "$VIRTUAL_ENV" ]] && { venv="$VIRTUAL_ENV"; deactivate; }
+    local venv_name="$(basename $venv)"
     rmvirtualenv "$venv_name"
     [[ -w .autoenv.zsh ]] && sed -i "/workon $venv_name)/d" .autoenv.zsh
 }
