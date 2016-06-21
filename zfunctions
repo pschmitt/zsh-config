@@ -421,18 +421,6 @@ mkpgcl() {
     setopt nomatch
 }
 
-# Notify ping
-nping() {
-    [[ -n "$1" ]] && DEST=$1 || DEST=lxl.io
-    while
-    do
-        ping -c 1 lxl.io && {
-            notify-send -a $0 -u critical 'You are online!'
-            break
-        } || sleep 5
-    done
-}
-
 # Generate a password
 # Usage: genpw [-a] LENGTH
 # -a: Alphanumeric chars only
@@ -496,16 +484,24 @@ rmvc() {
 }
 
 ssh-rm-key() {
-    [[ "$1" =~ '^[0-9]+$' ]] || { echo "Input is not a number" >&2; return 3;}
+    [[ "$1" =~ ^[0-9]+$ ]] || { echo "Input is not a number" >&2; return 3;}
     sed -i "${1}d" ~/.ssh/known_hosts
 }
 
 wait-online() {
+    [[ "$1" ]] || { echo "Usage: $0 DEST"; return 2; }
     while ! ping -c 1 -W 1 "$1" > /dev/null 2>&1
     do
         sleep 1
     done
 }
+
+# Notify ping
+nping() {
+    [[ -n "$1" ]] && DEST=$1 || DEST=comreset.io
+    wait-online "$DEST" && notify-send -a $0 -u critical 'You are online!'
+}
+
 
 nameserver() {
     [[ "$#" == 0 ]] && { cat /etc/resolv.conf; return; }
