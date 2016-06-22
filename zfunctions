@@ -128,14 +128,14 @@ submodule_add() {
     [[ -n $1 ]] || { echo "Usage: $0 SUBMODULE_DIR"; return 1; }
     git status >/dev/null 2>&1 || { echo 'Not a git repo. Exiting.'; return 1; }
     local git_url=$(cat $1/.git/config | grep -m1 url | awk '{ print $3 }')
-    git submodule add $git_url $1
+    git submodule add "$git_url" "$1"
 }
 
 # Clone from my username
 gcs() {
     local repo="$1"
     shift
-    git clone https://github.com/$USER/$repo $@
+    git clone "https://github.com/$USER/$repo" "$@"
 }
 
 # Git push wrapper with post-push support
@@ -189,13 +189,13 @@ jfx() {
 }
 
 prepend() {
-    sed -i "1i $1" $2
+    sed -i "1i $1" "$2"
 }
 
 # output a specific line of a file
 # $1: line number ; $2: file
 line () {
-    sed -n "${1}p" $2
+    sed -n "${1}p" "$2"
 }
 
 mkcd() {
@@ -285,7 +285,7 @@ sleeptil () {
 
 countdown() {
     local abort
-    [[ $1 -gt 0 ]] || return
+    [[ "$1" -gt 0 ]] || return
     for (( i=$1; i > 0; i-- ))
     do
         read -k 1 -t 1 -s abort
@@ -317,7 +317,7 @@ bak() {
     # TOOD Refactoring / split / use smart case statement ?
     [[ "$1" == "-s" ]] && cmd="cp -a" || cmd="mv"
     [[ $# -eq 2 ]] && shift
-    if [[ "$1" =~ ".*\.bak" ]]; then
+    if [[ "$1" =~ .*\.bak ]]; then
         eval $cmd -i "$1" "${1:r}"
     else
         local file="$1"
@@ -325,7 +325,7 @@ bak() {
             # if file does not exit try .bak instead
             [[ -e "${file}.bak" ]] && file="${file}.bak" || { echo "No such file or dir: $file"; return 1; }
         fi
-        if [[ "$file" =~ ".*\.bak" ]]; then
+        if [[ "$file" =~ .*\.bak ]]; then
             eval $cmd -i "$file" "${file:r}"
         else
             eval $cmd -i "$file{,.bak}"
@@ -338,16 +338,16 @@ swp() {
     if [ $# -ne 2 ]; then
         echo "swap: 2 arguments needed"; return 1
     fi
-    if [ ! -e $1 ]; then
+    if [ ! -e "$1" ]; then
         echo "swap: $1 does not exist"; return 1
     fi
-    if [ ! -e $2 ]; then
+    if [ ! -e "$2" ]; then
         echo "swap: $2 does not exist"; return 1
     fi
     local TMPFILE=tmp.$$
-    mv $1 $TMPFILE
-    mv $2 $1
-    mv $TMPFILE $2
+    mv "$1" "$TMPFILE"
+    mv "$2" "$1"
+    mv $TMPFILE "$2"
 }
 
 stop_alarm () {
@@ -359,35 +359,36 @@ stop_alarm () {
         ssh $remote_user@$remote_host "$stop_cmd" 2&> /dev/null
     else
         eval "$stop_cmd" 2&> /dev/null
+
     fi
 }
 
 # fav pron
 pfx() {
     local pfile=$HOME/videos/porn/.bookmarks
-    local wid=$(xdotool getactivewindow)
-    touch $pfile
-    xdotool windowactivate $(xdotool search --name "Private Browsing" | head -1)
+    local wid="$(xdotool getactivewindow)"
+    touch "$pfile"
+    xdotool windowactivate "$(xdotool search --name "Private Browsing" | head -1)"
     sleep 1
     xdotool key "F6"
     # TODO: Check for vimperator in title -> use "yy" instead of "ctrl-c"
     xdotool key ctrl+c
-    xsel -b >> $pfile
-    echo >> $pfile
-    xdotool windowactivate $wid
+    xsel -b >> "$pfile"
+    echo >> "$pfile"
+    xdotool windowactivate "$wid"
 }
 
 pf() {
     [[ -z "$1" ]] && { echo "Please provide a URL."; exit 1;}
     local pfile=$HOME/videos/porn/.bookmarks
-    echo "$*" >> $pfile
+    echo "$*" >> "$pfile"
 }
 
 # Development
 adblg() {
     local pkgname=co.schmitt.android
     local apppid=$(adb shell ps | grep $pkgname | cut -c10-15 | awk '{ print $1 }')
-    adb logcat | grep $apppid
+    adb logcat | grep "$apppid"
 }
 
 # Colored man pages
@@ -452,9 +453,10 @@ become() {
     local shell="$2"
     [[ -z "$user" ]] && { echo "Usage: $0 USER [SHELL]"; return 2; }
     [[ -z "$shell" ]] && {
-        [[ -n "$SHELL" ]] && shell=$SHELL || {
+        if [[ -n "$SHELL" ]] && shell=$SHELL
+        then
             command -v bash > /dev/null && shell="bash" || shell="sh"
-        }
+        fi
     }
     sudo -u "$user" -s "$shell"
 }
@@ -466,13 +468,13 @@ mkvc() {
     [[ -r "requirements.txt" ]] && requirements="-r requirements.txt"
     eval mkvirtualenv $requirements --python=$python_env \"$cur_dir\"
     # Auto env
-    [[ ! -f .autoenv.zsh ]] && {
+    if [[ ! -f .autoenv.zsh ]]
+    then
         echo "workon $cur_dir" > .autoenv.zsh
-    } || {
-        grep -q "workon $cur_dir" .autoenv.zsh || {
+    else
+        grep -q "workon $cur_dir" .autoenv.zsh
             echo "workon $cur_dir" >> .autoenv.zsh
-        }
-    }
+    fi
 }
 
 rmvc() {
@@ -499,7 +501,7 @@ wait-online() {
 # Notify ping
 nping() {
     [[ -n "$1" ]] && DEST=$1 || DEST=comreset.io
-    wait-online "$DEST" && notify-send -a $0 -u critical 'You are online!'
+    wait-online "$DEST" && notify-send -a "$0" -u critical 'You are online!'
 }
 
 
@@ -508,7 +510,7 @@ nameserver() {
     [[ "$1" == "-h" ]] && { echo "Usage: $0 NAMESERVER [NAMESERVER]..."; return 2; }
     local n
     echo '# Managed by nameserver()' | sudo tee /etc/resolv.conf > /dev/null
-    for n in $@
+    for n in "$@"
     do
         echo "nameserver $n" | sudo tee -a /etc/resolv.conf > /dev/null
     done
@@ -518,7 +520,7 @@ nameserver() {
 usshpass() {
     local password="$1"
     shift
-    sshpass -p "$password" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $@
+    sshpass -p "$password" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
 }
 
 sslcert() {
