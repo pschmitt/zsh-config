@@ -166,11 +166,11 @@ case $TERM in
         bindkey '^[Oc' forward-word  # ctrl-right
         bindkey '^[Od' backward-word # ctrl-left
         ;;
-    xterm-256color)
+    xterm)
         bindkey '\eOc' forward-word  # ctrl-right
         bindkey '\eOd' backward-word # ctrl-left
         ;;
-    xterm)
+    xterm-256color)
         bindkey '^[[1;5C' forward-word  # ctrl-right
         bindkey '^[[1;5D' backward-word # ctrl-left
         ;;
