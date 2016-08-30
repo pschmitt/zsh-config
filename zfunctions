@@ -504,6 +504,20 @@ online_notify() {
     wait-online "$DEST" && notify-send -a "$0" -u critical 'You are online!'
 }
 
+ssh-wait() {
+    [[ "$1" ]] || { echo "Usage: $0 DEST"; return 2; }
+    local user host
+    local dest="${@:$#}"
+    if [[ "$dest" =~ .*@.* ]]
+    then
+        read user host <<< $(echo "$dest" | sed -e 's/@/ /g')
+    else
+        host="$dest"
+    fi
+    echo "Wait for $host"
+    echo "ssh $@"
+}
+
 
 nameserver() {
     [[ "$#" == 0 ]] && { cat /etc/resolv.conf; return; }
@@ -525,6 +539,13 @@ usshpass() {
 
 sslcert() {
     echo | openssl s_client -showcerts -servername gnupg.org -connect "$1:443" 2>/dev/null | openssl x509 -inform pem -noout -text
+}
+
+wport() {
+    # Get the PID and process name of the process listening on a given TCP port
+    local pid=$(sudo fuser "${1}/tcp" 2>&1 | awk '{print $NF}')
+    local pname=$(ps -p "$pid" -o comm=)
+    echo "$pname (PID: $pid)"
 }
 
 # vim: set ft=sh et ts=4 sw=4 :
