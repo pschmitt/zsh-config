@@ -544,7 +544,7 @@ sslcert() {
 wport() {
     # Get the PID and process name of the process listening on a given TCP port
     local pid=$(sudo fuser "${1}/tcp" 2>&1 | awk '{print $NF}')
-    local pname=$(ps -p "$pid" -o comm=)
+    local pname=$(ps -p "$pid" -o comm=) # to get full path use -o command
     echo "$pname (PID: $pid)"
 }
 
