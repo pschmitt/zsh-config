@@ -245,6 +245,9 @@ alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
 alias mkvenv="mkvirtualenv"
 alias mkvenv2="mkvirtualenv2"
 alias mkvc2="mkvc /usr/bin/python2"
+alias mktmpenv2="mktmpenv -p /usr/bin/python2"
+alias pipoff="pip install --no-index --find-links=file:$HOME/dev/pypi"
+alias pipoff2="pip2 install --no-index --find-links=file:$HOME/dev/pypi2"
 
 # Create a temporary screenshot
 alias tscrot="scrot -s -e 'mv \$f /tmp && echo /tmp/\$f'"
