@@ -223,10 +223,6 @@ done
 # Autoenv
 . ${ZDOTDIR}/plugins/zsh-autoenv/autoenv.zsh
 
-# z
-_Z_DATA=$XDG_DATA_HOME/zsh/z
-. ${ZDOTDIR}/plugins/z/z.sh
-
 # Mouse support
 # . ${ZDOTDIR}/plugins/mouse.zsh
 # zle-toggle-mouse
