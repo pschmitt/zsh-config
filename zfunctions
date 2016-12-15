@@ -472,8 +472,10 @@ mkvc() {
     then
         echo "workon $cur_dir" > .autoenv.zsh
     else
-        grep -q "workon $cur_dir" .autoenv.zsh
+        if ! grep -q "workon $cur_dir" .autoenv.zsh
+        then
             echo "workon $cur_dir" >> .autoenv.zsh
+        fi
     fi
 }
 
@@ -517,7 +519,6 @@ ssh-wait() {
     echo "Wait for $host"
     echo "ssh $@"
 }
-
 
 nameserver() {
     [[ "$#" == 0 ]] && { cat /etc/resolv.conf; return; }
