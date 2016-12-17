@@ -72,12 +72,12 @@ export WORKON_HOME=$XDG_DATA_HOME/virtualenvs
 # export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
 VENVWRAPPER=/usr/bin/virtualenvwrapper.sh
 [[ -r $VENVWRAPPER ]] && { source $VENVWRAPPER }
-unset $VENVWRAPPER
+unset VENVWRAPPER
 
 # zinit
 ZINIT_LOCK=$XDG_DATA_HOME/zsh/zinit_completed
 [[ ! -f $ZINIT_LOCK ]] && . $ZDOTDIR/zinit
-unset $ZINIT_LOCK
+unset ZINIT_LOCK
 
 export TASKDATA=$XDG_DATA_HOME/task
 export TASKRC=$XDG_CONFIG_HOME/task/taskrc
