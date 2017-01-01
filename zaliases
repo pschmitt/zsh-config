@@ -115,6 +115,7 @@ alias ussh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias uscp="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias sstl="ssh pschmitt@stl-s-studwork.htw-saarland.de"
 alias sskad="ssh -i /etc/openvpn/skad/philipp.key philipp@10.8.0.1"
+alias cssh="docker run -it --rm pschmitt/ssh"
 
 # Awesome-WM
 alias awst="Xephyr -ac -br -noreset -screen 800x600 :1 & sleep 3 && DISPLAY=:1.0 awesome"
