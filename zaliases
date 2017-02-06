@@ -252,3 +252,10 @@ alias pipoff2="pip2 install --no-index --find-links=file:$HOME/dev/pypi2"
 
 # Create a temporary screenshot
 alias tscrot="scrot -s -e 'mv \$f /tmp && echo /tmp/\$f'"
+
+# xset magic
+alias xb="xsel -b | xsel"
+alias bx="xsel | xsel -b"
+
+# Work stuff
+alias cantine="cd ~/dev/work/cantine-menu-fetcher; python cantine-menu.py && xdg-open menu.pdf; deactivate; cd -"
