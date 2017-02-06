@@ -233,14 +233,6 @@ compdef ggpush=git
 alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
 compdef ggpnp=git
 
-# Dangerous aliases (contain passwords in clear text)
-if command -v n_login > /dev/null; then
-    alias scrob="scrobbler -d -u $(n_login last.fm) -5 $(n_login -p last.fm) -l /media/iPodClassic"
-    # Bitcoin mining
-    alias 50btc="sudo bfgminer -o http://pool.50btc.com:8332 -u $(n_login pool.50btc.com) -p $(n_login -p pool.50btc.com) -d 1 -v 2 -w 256 -g 4 -k phatk -I 8"
-    alias btccz="sudo bfgminer -o stratum.bitcoin.cz:3333 -u $(n_login stratum.bitcoin.cz) -p $(n_login -p stratum.bitcoin.cz) -d 1 -v 1 -w 256 -g 4 -k phatk -I 8"
-fi
-
 # virtualenvwrapper
 alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
 alias mkvenv="mkvirtualenv"
