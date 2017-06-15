@@ -170,16 +170,9 @@ case $TERM in
         bindkey '\eOc' forward-word  # ctrl-right
         bindkey '\eOd' backward-word # ctrl-left
         ;;
-    xterm-256color)
+    xterm-256color|screen-256color)
         bindkey '^[[1;5C' forward-word  # ctrl-right
         bindkey '^[[1;5D' backward-word # ctrl-left
-        ;;
-    screen-256color)
-        bindkey '^[OC' forward-word  # ctrl-right
-        bindkey '^[OD' backward-word # ctrl-left
-        ;;
-    screen.linux)
-        # TODO
         ;;
     linux)
         bindkey '^[[C' forward-word  # ctrl-right
@@ -239,4 +232,3 @@ done
 # FIXME: Why do we need these?!
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
