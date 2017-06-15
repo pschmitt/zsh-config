@@ -17,6 +17,14 @@
 HISTFILE=$XDG_DATA_HOME/zsh/zhistory
 HISTSIZE=5000
 SAVEHIST=5000
+# Save history immediately
+setopt incappendhistory
+# Share history accross terms
+setopt sharehistory
+# Append history instead of overwriting
+setopt appendhistory
+# Ignore stuff starting with a space
+setopt histignorespace
 
 
 #------------------------------
