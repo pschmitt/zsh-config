@@ -13,3 +13,6 @@
 [submodule "plugins/zsh-autoenv"]
 	path = plugins/zsh-autoenv
 	url = https://github.com/Tarrasch/zsh-autoenv
+[submodule "plugins/zsh-autosuggestions"]
+	path = plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions

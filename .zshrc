@@ -237,6 +237,9 @@ done
 # fzf
 . ${ZDOTDIR}/plugins/fzf.zsh
 
+# zsh-autosuggestions
+. ${ZDOTDIR}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # FIXME: Why do we need these?!
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
