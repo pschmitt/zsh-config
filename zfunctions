@@ -79,44 +79,6 @@ extract() {
     done
 }
 
-# A shortcut function that simplifies usage of xclip.
-# - Accepts input from either stdin (pipe), or params.
-# - If the input is a filename that exists, then it
-#   uses the contents of that file.
-# http://madebynathan.com/2011/10/04/a-nicer-way-to-use-xclip/
-cb() {
-    local _scs_col="\e[0;32m"; local _wrn_col='\e[1;31m'; local _trn_col='\e[0;33m'
-    # Check that xclip is installed.
-    if ! type xclip > /dev/null 2>&1; then
-        echo -e "$_wrn_col""You must have the 'xclip' program installed.\e[0m"
-    # Check user is not root (root doesn't have access to user xorg server)
-    elif [[ "$USER" == "root" ]]; then
-        echo -e "$_wrn_col""Must be regular user (not root) to copy a file to the clipboard.\e[0m"
-    else
-        # If no tty, data should be available on stdin
-        if ! [[ "$( tty )" == /dev/* ]]; then
-            input="$(< /dev/stdin)"
-        # Else, fetch input from params
-        else
-            input="$*"
-        fi
-        if [ -z "$input" ]; then  # If no input, print usage message.
-            echo "Copies a string or the contents of a file to the clipboard."
-            echo "Usage: cb <string or file>"
-            echo "       echo <string or file> | cb"
-        else
-            # If the input is a filename that exists, then use the contents of that file.
-            if [ -f "$input" ]; then input="$(cat $input)"; fi
-            # Copy input to clipboard
-            echo -n "$input" | xclip -selection c
-            # Truncate text for status
-            if [ ${#input} -gt 80 ]; then input="$(echo $input | cut -c1-80)$_trn_col...\e[0m"; fi
-            # Print status.
-            echo -e "$_scs_col""Copied to clipboard:\e[0m $input"
-        fi
-    fi
-}
-
 # print current git branch to stdout
 current_branch() {
     ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -159,24 +121,22 @@ sprunge() {
     $@ | curl -F 'sprunge=<-' http://sprunge.us
 }
 
-# tired of doing a wget <S-Ins><CR>; tar xf f<Tab><CR>; cd f<Tab><CR> ?
-# Usage: wt 'http://example.com/blah.blah.tar.gz' [keep]
-# If [keep] is presented, whatever it is, the tarball will be kept.
-wt() {
-    (( $# == 0 )) && return
-    local URL="$1"
-    local keep="$2"
-    local filename="$(basename "$URL")"
-    wget "$URL" -O "$filename"
-    tar xf "$filename"
-    [[ -z "$keep" ]] && rm "$filename"
-    # Guessing the directory
-    local d="${filename%%.[a-z]*}"
-    if [[ -d "$d" ]]; then
-        cd "$d"
-    else
-        echo "Sorry, I don't know what's the name of extracted directory."
+# File uploads
+transfer() {
+    if [ $# -eq 0 ]
+    then
+        echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+        return 1
     fi
+    tmpfile=$(mktemp -t transferXXX)
+    if tty -s
+    then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+        curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> "$tmpfile"
+    else
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> "$tmpfile"
+    fi
+    cat "$tmpfile"
+    rm -f "$tmpfile"
 }
 
 # Get journal entries for a particular service
@@ -202,33 +162,16 @@ mkcd() {
     mkdir -p "$@" && cd "$@"
 }
 
-psg () {
+psg() {
     ps aux | grep "$1" | grep -v "grep"
 }
 
 # Calcultor
-c () {
+c() {
     # echo "scale=3; $@" | bc
     bc -l <<< $@
 }
 alias c="noglob c" # do not glob (expand) wildcards, like: c 12*3
-
-proxyon() {
-    export http_proxy="www-proxy.htw-saarland.de:3128"
-    export https_proxy="www-proxy.htw-saarland.de:3128"
-    export ftp_proxy="www-proxy.htw-saarland.de:3128"
-    echo -e "Proxy environment variable set."
-}
-
-proxyoff() {
-    unset HTTP_PROXY
-    unset http_proxy
-    unset https_proxy
-    unset HTTPS_PROXY
-    unset FTP_PROXY
-    unset ftp_proxy
-    echo -e "\nProxy environment variable removed."
-}
 
 rationalise-dot() {
     if [[ $LBUFFER = *.. ]]; then
@@ -363,48 +306,6 @@ stop_alarm () {
     fi
 }
 
-# fav pron
-pfx() {
-    local pfile=$HOME/videos/porn/.bookmarks
-    local wid="$(xdotool getactivewindow)"
-    touch "$pfile"
-    xdotool windowactivate "$(xdotool search --name "Private Browsing" | head -1)"
-    sleep 1
-    xdotool key "F6"
-    # TODO: Check for vimperator in title -> use "yy" instead of "ctrl-c"
-    xdotool key ctrl+c
-    xsel -b >> "$pfile"
-    echo >> "$pfile"
-    xdotool windowactivate "$wid"
-}
-
-pf() {
-    [[ -z "$1" ]] && { echo "Please provide a URL."; exit 1;}
-    local pfile=$HOME/videos/porn/.bookmarks
-    echo "$*" >> "$pfile"
-}
-
-# Development
-adblg() {
-    local pkgname=co.schmitt.android
-    local apppid=$(adb shell ps | grep $pkgname | cut -c10-15 | awk '{ print $1 }')
-    adb logcat | grep "$apppid"
-}
-
-# Colored man pages
-# Source: https://wiki.archlinux.org/index.php/Man_Page#Colored_man_pages
-# Append LESS_TERMCAP_DEBUG=1 \ to see what codes are used in a manpage
-# man() {
-#     env LESS_TERMCAP_mb=$'\E[01;31m' \
-#     LESS_TERMCAP_md=$'\E[01;38;5;74m' \
-#     LESS_TERMCAP_me=$'\E[0m' \
-#     LESS_TERMCAP_se=$'\E[0m' \
-#     LESS_TERMCAP_so=$'\E[38;5;246m' \
-#     LESS_TERMCAP_ue=$'\E[0m' \
-#     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
-#     man "$@"
-# }
-
 # Echo as root
 secho() {
     [[ $# -lt 2 ]] && { echo "Usage: secho [-en] string file" 1>&2; return 1; }
@@ -420,23 +321,6 @@ mkpgcl() {
     unsetopt nomatch
     rm -rf pkg/ src/ $(basename $PWD)-*.{pkg.tar.xz,src.tar.gz}
     setopt nomatch
-}
-
-# Generate a password
-# Usage: genpw [-a] LENGTH
-# -a: Alphanumeric chars only
-genpw() {
-    local length=10 policy='[:print:]'
-    [[ -n "$1" ]] && {
-        case "$1" in
-            -a) policy='[:alnum:]'
-                [[ -n "$2" ]] && length="$2"
-                ;;
-            -h) echo "$0 [-a] LENGTH"; return ;;
-            *) length="$1" ;;
-        esac
-    }
-    </dev/urandom tr -dc "$policy" | fold -w "$length" | head -1
 }
 
 # Generate 4096 SSL key
@@ -545,8 +429,17 @@ sslcert() {
 wport() {
     # Get the PID and process name of the process listening on a given TCP port
     local pid=$(sudo fuser "${1}/tcp" 2>&1 | awk '{print $NF}')
+    # No PID -> No output
+    if [[ -z "$pid" ]]
+    then
+        return
+    fi
     local pname=$(ps -p "$pid" -o comm=) # to get full path use -o command
     echo "$pname (PID: $pid)"
+}
+
+ppid() {
+    ss -lpn | awk '/'"${1}"'/ { print gensub(/.*pid=(.+),.*/, "\\1", "g"); exit }'
 }
 
 # vim: set ft=sh et ts=4 sw=4 :

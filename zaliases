@@ -36,26 +36,13 @@ alias grep="grep --color=auto"
 alias rsrc="source $ZDOTDIR/.zshrc"
 alias vim="vim -i $HOME/.cache/vim/viminfo"
 alias svim="sudoedit "
-alias wine="env WINEARCH=win32 wine"
-alias winetricks"env WINEARCH=win32 winetricks"
 alias x=extract
 alias wget="wget -c"
 alias xdspv="export DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority"
 # Wake screen and disable screensaver
 alias son="xdspv; xdotool key ctrl; xset dpms force on; xset -dpms; xset s off"
 
-# Change dir
-alias cdbin="cd ~/bin"
-alias cdconf="cd $XDG_CONFIG_HOME"
-alias cddev="cd ~/dev"
-alias cddl="cd XDG_DOWNLOAD_DIR"
-alias cddocs="cd $XDG_DOCUMENTS_DIR"
-alias cdt="cd ~/tmp"
-alias cdz="cd $ZDOTDIR"
-
 # Systemd
-alias suctl="systemctl --user"
-alias syctl="sudo systemctl"
 alias start="sudo systemctl start"
 alias stop="sudo systemctl stop"
 alias restart="sudo systemctl restart"
@@ -71,11 +58,6 @@ alias jb="sudo journalctl -bl"
 alias jerr="sudo journalctl -b -p err" # Only show errors since last boot
 alias ju="sudo journalctl -l -u" # By unit
 
-# Pacman
-alias p="sudo pacman"
-alias pup="sudo pacman -Syu" # Synchronize with repositories before upgrading packages that are out of date on the local system.
-alias prm="sudo pacman -Rns" # Remove the specified package(s), its configuration(s) and unneeded dependencies
-
 # Yaourt
 alias y="yaourt"
 alias yasdep='yaourt -S --asdeps' # Install given package(s) as dependencies of another package
@@ -90,148 +72,51 @@ alias yu="yaourt -U"
 alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
 alias yupnc="yaourt -Syu --noconfirm --aur; /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
 
-# Device mouting and sync
-alias laxsync="ftpsync -p ftpserver=laxlinux.net ftpdir=/public_html/php /home/pschmitt/public_html/php/php_project/public_html ignoremask=logs+.htaccess+music+git"
-alias mount-iso="mount -o loop"
-
 # Network
-alias firefoxg="firefox -P guest"
-alias wank="firefox-fullscreenhack -P 'porn' -no-remote -private"
 alias ro="start pia@Romania"
 alias rod="stop pia@Romania transmission"
 alias ch="start pia@Switzerland"
 alias chd="stop pia@Switzerland transmission"
 alias ipa="ip a"
-alias catdns="cat /etc/resolv.conf"
-
-# Gaming
-alias steam="STEAM_FRAME_FORCE_CLOSE=1 steam" #STEAM_RUNTIME=0
-
-# lulz
-alias ftg='echo "Ferme ta gueule fils de pute" | espeak -v fr'
 
 # SSH
+command -v assh > /dev/null && alias ssh="assh wrapper ssh"
 alias ussh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias uscp="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-alias sstl="ssh pschmitt@stl-s-studwork.htw-saarland.de"
-alias sskad="ssh -i /etc/openvpn/skad/philipp.key philipp@10.8.0.1"
-alias cssh="docker run -it --rm pschmitt/ssh"
-
-# Awesome-WM
-alias awst="Xephyr -ac -br -noreset -screen 800x600 :1 & sleep 3 && DISPLAY=:1.0 awesome"
-alias avim="vim $XDG_CONFIG_HOME/awesome/rc.lua"
-
-# XMonad
-alias xvim="vim ~/.xmonad/xmonad.hs"
-
-# wmii
-alias wvim="vim ~/.wmii/wmiirc"
-
-# i3
-alias ivim="vim $XDG_CONFIG_HOME/i3/config"
-
-# vim
-alias vvim="vim $VIMDOTDIR/vimrc"
-
-# zsh
-alias zvim="vim $ZDOTDIR/.zshrc"
-alias zavim="vim $ZDOTDIR/zaliases"
-alias zahvim="vim $ZDOTDIR/zaliases_$HOST"
-alias zfvim="vim $ZDOTDIR/zfunctions"
-alias zfhvim="vim $ZDOTDIR/zfunctions_$HOST"
+alias cssh="docker run -it -v ~/.ssh/id_rsa:/config/.ssh/id_rsa --rm pschmitt/ssh"
+alias fssh="ussh -F /dev/null"
+alias ssh-clean="assh sockets flush; killall autossh ssh"
+alias sshnts="autossh -M 0 nts"
+alias sshvdi="autossh -M 0 vdi"
 
 # Security
 alias logkeys="sudo logkeys -s --no-func-keys -m /usr/share/lkmaps/de.map -o /home/pschmitt/.logkeys/logs/sniffed.log"
 
 # Apps
 alias trc="transmission-remote-cli"
-alias sad="sudo adb start-server"
 alias todo="vim -c ':Note TODO'"
-alias hdcam="mplayer tv:// -tv driver=v4l2:width=1920:height=1080:device=/dev/video0 -fps 40"
 
 # QR codes
 alias qr="qrencode -t ansi -o - "
-alias qrscan="LD_PRELOAD=/usr/lib/v4l1compat.so zbarcam --raw /dev/video0"
-
-# Work
-alias pysrv="python2 -m SimpleHTTPServer & $BROWSER localhost:8000 && fg"
-alias gcc="gcc -Wall -pedantic"
-
-# Development
-# KeyringDroid
-alias adb-root="adb root start-server; adb connect sgs"
-alias pulldb="rm ~/temp/keyrings.db; adb pull /data/data/co.schmitt.android.keyringdroid/databases/keyrings.db ~/temp/keyrings.db && sqlitebrowser ~/temp/keyrings.db "
-alias pullkrd="adb shell rm /extSdCard/krd.tgz; rm -rf ~/temp/keyringdroid/krd.tgz ~/temp/keyringdroid/co.schmitt.android.keyringdroid; adb shell tar cvzf /extSdCard/krd.tgz /data/data/co.schmitt.android.keyringdroid/; adb pull /extSdCard/krd.tgz ~/temp/keyringdroid; cd ~/temp/keyringdroid/; tar zxvf ~/temp/keyringdroid/krd.tgz; mv data/data/co.schmitt.android.keyringdroid .; rm -rf data/; cd -"
-alias adbc="adb connect sgs"
-alias adbuninst="adb shell pm uninstall -k co.schmitt.android.keyringdroid"
 
 # git
-alias g='git'
-compdef g=git
 alias gst='git status'
 compdef _git gst=git-status
 alias gl='git pull'
-alias gstn='git status -uno'
-compdef _git gstn=git-status
 compdef _git gl=git-pull
-alias gup='git fetch && git rebase'
-compdef _git gup=git-fetch
-# alias gp='git push'
 alias gdf='git diff'
 alias gdfc='git diff --cached'
-gdv() { git diff -w '$@' | view - }
-compdef _git gdv=git-diff
-alias gc='git commit -v'
-compdef _git gc=git-commit
-alias gca='git commit -v -a'
-compdef _git gca=git-commit
+compdef _git gdf=git-diff
 alias gm='git commit -m'
 alias gma='git commit -am'
 compdef _git gm=git-commit
-alias gco='git checkout'
-compdef _git gco=git-checkout
 alias gcm='git checkout master'
-alias gb='git branch'
-compdef _git gb=git-branch
-alias gba='git branch -a'
-compdef _git gba=git-branch
-alias gcount='git shortlog -sn'
-compdef gcount=git
-alias gcp='git cherry-pick'
-compdef _git gcp=git-cherry-pick
-alias glg='git log --stat --max-count=5'
-compdef _git glg=git-log
-alias glgg='git log --graph --max-count=5'
-compdef _git glgg=git-log
-alias gss='git status -s'
-compdef _git gss=git-status
-alias ga='git add'
-compdef _git ga=git-add
-alias gmrg='git merge'
-compdef _git gmrg=git-merge
-alias grh='git reset HEAD'
-alias grhh='git reset HEAD --hard'
 # Clone from clipboard
 alias gcx='git clone $(xsel -b)'
 alias gcxr='git clone --recursive $(xsel -b)'
 # Clean current repo
 alias gclf='git clean -d -f -f; git reset --hard HEAD;'
 alias gsmp='git submodule foreach "git submodule update --init --recursive; git checkout master; git pull"'
-
-# Git and svn mix
-alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
-compdef git-svn-dcommit-push=git
-
-alias gsr='git svn rebase'
-alias gsd='git svn dcommit'
-
-# these aliases take advantage of the previous function
-alias ggpull='git pull origin $(current_branch)'
-compdef ggpull=git
-alias ggpush='git push origin $(current_branch)'
-compdef ggpush=git
-alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
-compdef ggpnp=git
 
 # virtualenvwrapper
 alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
