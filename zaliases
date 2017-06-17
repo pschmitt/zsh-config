@@ -118,7 +118,7 @@ alias gcxr='git clone --recursive $(xsel -b)'
 alias gclf='git clean -d -f -f; git reset --hard HEAD;'
 alias gsmp='git submodule foreach "git submodule update --init --recursive; git checkout master; git pull"'
 
-# virtualenvwrapper
+# Python stuff
 alias mkvirtualenv2="mkvirtualenv -p /usr/bin/python2"
 alias mkvenv="mkvirtualenv"
 alias mkvenv2="mkvirtualenv2"
@@ -136,3 +136,8 @@ alias bx="xsel | xsel -b"
 
 # Work stuff
 alias cantine="cd ~/dev/work/cantine-menu-fetcher; python cantine-menu.py && xdg-open menu.pdf; deactivate; cd -"
+
+# Docker
+alias drm="docker run -it --rm"
+alias alpine="drm alpine:latest ash"
+alias ubuntu="drm ubuntu:latest bash"
