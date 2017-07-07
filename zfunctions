@@ -387,7 +387,7 @@ wait-online() {
 # Notify when internet connection is up
 online_notify() {
     [[ -n "$1" ]] && DEST=$1 || DEST=comreset.io
-    wait-online "$DEST" && notify-send -a "$0" -u critical 'You are online!'
+    wait-online "$DEST" && notify-send -a "$0" -u critical "$DEST is online!"
 }
 
 ssh-wait() {
