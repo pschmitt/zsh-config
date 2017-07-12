@@ -69,8 +69,8 @@ alias yqo="yaourt -Qo"
 alias yrm="yaourt -Rsn"
 alias yrf="yaourt -Rcsn"
 alias yu="yaourt -U"
-alias yup="yaourt -Syu --aur && /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
-alias yupnc="yaourt -Syu --noconfirm --aur; /etc/cron.hourly/refresh-pacman_db 2>/dev/null"
+alias yup="yaourt -Syu --aur"
+alias yupnc="yaourt -Syu --noconfirm --aur"
 
 # Network
 alias ro="start pia@Romania"
