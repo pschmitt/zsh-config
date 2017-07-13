@@ -42,6 +42,7 @@ export MPLAYER_HOME=$XDG_CONFIG_HOME/mplayer
 export BROWSER=firefox
 export EDITOR=vim
 export VISUAL=$EDITOR
+export SYSTEMD_EDITOR=vim # for systemctl edit
 export FILER=spacefm
 export PAGER=less
 export MANPAGER=$PAGER
