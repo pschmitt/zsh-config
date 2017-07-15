@@ -93,6 +93,13 @@ submodule_add() {
     git submodule add "$git_url" "$1"
 }
 
+
+yadm_submodule_add() {
+    [[ -n $1 ]] || { echo "Usage: $0 SUBMODULE_DIR"; return 1; }
+    local git_url=$(cat $1/.git/config | grep -m1 url | awk '{ print $3 }')
+    yadm submodule add "$git_url" "$1"
+}
+
 # Clone from my username
 gcs() {
     local repo="$1"
