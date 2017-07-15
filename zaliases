@@ -80,7 +80,7 @@ alias chd="stop pia@Switzerland transmission"
 alias ipa="ip a"
 
 # SSH
-command -v assh > /dev/null && alias ssh="assh wrapper ssh"
+command -v assh > /dev/null && alias ssh="assh --config $XDG_CONFIG_HOME/assh/assh.yml wrapper ssh"
 alias ussh="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias uscp="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias cssh="docker run -it -v ~/.ssh/id_rsa:/config/.ssh/id_rsa --rm pschmitt/ssh"
