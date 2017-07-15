@@ -1,9 +1,6 @@
 # Create required directories and downlod dependencies
 echo "Running zshinit ($0). You should not see this more than once"
 
-# fzf plugin
-gem install --no-document curses
-
 # virtualenvwrapper
 mkdir -p "$WORKON_HOME"
 
