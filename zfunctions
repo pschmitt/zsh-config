@@ -100,6 +100,11 @@ yadm_submodule_add() {
     yadm submodule add "$git_url" "$1"
 }
 
+yadm-dumb-update() {
+    yadm commit -am "Update config"
+    yadm push
+}
+
 # Clone from my username
 gcs() {
     local repo="$1"
