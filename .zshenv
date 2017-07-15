@@ -108,4 +108,5 @@ source "${ZDOTDIR}/.pathrc"
 # Skip proxy for specific hosts
 # export no_proxy="exemple.org"
 
-export ASSH_CONFIG="${XDG_CONFIG_HOME:-.config}/assh/assh.yml"
+export ASSH_CONFIG="${XDG_CONFIG_HOME}/assh/assh.yml"
+export GNUPGHOME="${XDG_CONFIG_HOME}/gnupg"
